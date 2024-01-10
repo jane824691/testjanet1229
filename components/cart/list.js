@@ -89,7 +89,7 @@ export default function CartList() {
 
             {items.map((v, i) => {
               return (
-                <div className="card mb-3 underline" key={v.id}>
+                <div className="card mb-3 underline" key={v.pid}>
                   <div className="row g-0">
                     <div className="col-3">
                       <input
@@ -108,7 +108,7 @@ export default function CartList() {
                       <div className="card-body to-middle ">
                         <h5 className="card-title card-text align-items-center row">
                           <div className="col-5">
-                            <Link className='a-link' href={`/product/${v.id}`}>
+                            <Link className='a-link' href={`/product/${v.pid}`}>
                               {v.name}
                             </Link>
                           </div>
@@ -119,7 +119,7 @@ export default function CartList() {
                                 type="button"
                                 className="btn btn-outline-secondary amount-btn-L"
                                 onClick={() => {
-                                  decrement(v.id)
+                                  decrement(v.pid)
                                 }}
                               >
                                 -
@@ -132,7 +132,7 @@ export default function CartList() {
                                 type="button"
                                 className="btn btn-outline-secondary amount-btn-R"
                                 onClick={() => {
-                                  increment(v.id)
+                                  increment(v.pid)
                                 }}
                               >
                                 +
@@ -146,7 +146,7 @@ export default function CartList() {
                               type="button"
                               className="btn btn-outline-success amount-btn btn-X"
                               onClick={() => {
-                                removeItem(v.id)
+                                removeItem(v.pid)
                               }}
                             >
                               X

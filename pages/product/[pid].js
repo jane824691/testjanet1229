@@ -22,6 +22,7 @@ export default function Detail() {
   //跳轉用
   const router = useRouter()
 
+  // 方法1: 從db抓JSON直接filter倒,有bug不同頁面+入的都會變同一項
   useEffect(() => {
     const fetchData = async () => {
       const pid = +router.query.pid
@@ -59,42 +60,6 @@ export default function Detail() {
     // 呼叫 fetchData 以觸發資料載入
     fetchData()
   }, [router.query.pid])
-
-  // 從useEffect這邊開始抓出[pid].js變數頁面的變數值
-  // useEffect(() => {
-  //   const pid = +router.query.pid
-  //   console.log({ pid, raw: router.query.pid })
-
-  //   if (pid) {
-  //     // 在 data 中查找匹配的商品信息
-  //     const selectedProduct = data.filter((product) => {
-  //       console.log(product.id, router.query.id)
-  //       if (product.id == router.query.pid) {
-  //         return product
-  //       }
-  //     })
-  //     // const selectedProduct = data.find((product) => product.id === pid);
-  //     console.log('success', selectedProduct)
-
-  //     // 因為剛好此次的JSON是包成一大個, 故特地用陣列[0]去抓一整個大包
-  //     setMyProduct(() => {
-  //       return {
-  //         pid: selectedProduct[0].id,
-  //         name: selectedProduct[0].name,
-  //         price: selectedProduct[0].price,
-  //         info: selectedProduct[0].info,
-  //       }
-  //     })
-  //   }
-  // }, [router.query.pid])
-
-  // // 純檢查看pid是否有正確帶出值
-  // if (myProduct.pid === '') {
-  //   console.log('nodata')
-  //   return <></>
-  // } else {
-  //   console.log('e', myProduct)
-  // }
 
   return (
     <>
@@ -152,9 +117,9 @@ export default function Detail() {
               onClick={() => {
                 addItem({
                   pid: myProduct.pid,
+                  name: myProduct.name,
                   quantity: total,
-                  product_name: myProduct.product_name,
-                  product_price: myProduct.product_price,
+                  price: myProduct.price,
                 })
               }}
             >
@@ -164,7 +129,7 @@ export default function Detail() {
               className="btn btn-danger text-white add-cart-danger"
               onClick={() => {
                 addItem({
-                  id: myProduct.pid,
+                  pid: myProduct.pid,
                   name: myProduct.name,
                   quantity: total,
                   price: myProduct.price,
