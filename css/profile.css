@@ -1,0 +1,8 @@
+@charset "UTF-8";
+.pro-btn:hover {
+  color: #ffffff; /*  hover 時的顏色 */
+}
+
+.btn.pro-shadow {
+  box-shadow: none;
+}/*# sourceMappingURL=profile.css.map */
