@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Carousel from '@/components/product/carousel'
 import { useRouter } from 'next/router'
-import { AB_PRODUCT } from '@/components/my-const'
+import { AB_PRODUCT, ONE_PRODUCT } from '@/components/my-const'
 import Link from 'next/link'
 import { useCart } from '@../../../components/hooks/use-cart-state'
 // import data from '@/data/Product.json'
@@ -29,10 +29,11 @@ export default function Detail() {
       console.log({ pid, raw: router.query.pid })
 
       try {
-        const response = await fetch(AB_PRODUCT)
+        const response = await fetch(ONE_PRODUCT + `/${pid}`)
         const productData = await response.json()
         console.log('productData:', productData)
-
+        setMyProduct(productData)
+        /*
         // 如果有提供 pid，則在 productData 中尋找對應的商品
         if (pid && Array.isArray(productData)) {
           const selectedProduct = productData.filter(
@@ -43,7 +44,7 @@ export default function Detail() {
             console.log('success', selectedProduct)
 
             setMyProduct({
-              pid: selectedProduct.pid,
+              pid: selectedProduct[0].pid,
               name: selectedProduct[0].product_name,
               price: selectedProduct[0].product_price,
               info: selectedProduct[0].product_description,
@@ -52,6 +53,7 @@ export default function Detail() {
             console.log(`Product with pid ${pid} not found.`)
           }
         }
+        */
       } catch (error) {
         console.error('Error fetching product data:', error)
       }
@@ -60,6 +62,8 @@ export default function Detail() {
     // 呼叫 fetchData 以觸發資料載入
     fetchData()
   }, [router.query.pid])
+
+
 
   return (
     <>
@@ -72,7 +76,7 @@ export default function Detail() {
 
         <div className="col-sm-5 d-grid gap-2">
           <h4 id="name" name="name">
-            {myProduct.name}
+            {myProduct.product_name}
           </h4>
 
           <p className="product-desc">{myProduct.info}</p>
