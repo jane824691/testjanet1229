@@ -6,7 +6,7 @@
         <div class="card-body">
           <h5 class="card-title">編輯資料</h5>
           <form name="form1" onsubmit="sendForm(event)">
-            <input type="hidden" name="sid" value="<%= sid %>" />
+            <input type="hidden" name="pid" value="<%= pid %>" />
             <div class="mb-3">
               <label for="name" class="form-label">name</label>
               <input
@@ -14,53 +14,33 @@
                 class="form-control"
                 id="name"
                 name="name"
-                value="<%= name %>"
+                value="<%= product_name %>"
               />
               <div class="form-text"></div>
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">email</label>
+              <label for="email" class="form-label">price</label>
               <input
                 type="text"
                 class="form-control"
-                id="email"
-                name="email"
-                value="<%= email %>"
+                id="product_price"
+                name="product_price"
+                value="<%= product_price %>"
               />
               <div class="form-text"></div>
             </div>
+
+
             <div class="mb-3">
-              <label for="mobile" class="form-label">mobile</label>
-              <input
-                type="text"
-                class="form-control"
-                id="mobile"
-                name="mobile"
-                value="<%= mobile %>"
-              />
-              <div class="form-text"></div>
-            </div>
-            <div class="mb-3">
-              <label for="birthday" class="form-label">birthday</label>
-              <input
-                type="date"
-                class="form-control"
-                id="birthday"
-                name="birthday"
-                value="<%= birthday2 %>"
-              />
-              <div class="form-text"></div>
-            </div>
-            <div class="mb-3">
-              <label for="address" class="form-label">address</label>
+              <label for="address" class="form-label">product_description</label>
               <textarea
                 class="form-control"
                 id="address"
                 name="address"
                 cols="30"
-                rows="3"
+                rows="10"
               >
-<%= address %></textarea
+<%= product_description %></textarea
               >
             </div>
 

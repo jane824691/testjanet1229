@@ -82,7 +82,7 @@ const getListData = async (req) => {
     return output;
   }
 
-  const t_sql = `SELECT COUNT(1) totalRows FROM product ${where}`;
+  const t_sql = `SELECT COUNT(1) totalRows FROM order_list ${where}`;
   [[{ totalRows }]] = await db.query(t_sql);
   totalPages = Math.ceil(totalRows / perPage);
   if (totalRows > 0) {
@@ -92,7 +92,7 @@ const getListData = async (req) => {
       return { ...output, totalRows, totalPages };
     }
 
-    const sql = `SELECT * FROM product ${where} ORDER BY pid DESC 
+    const sql = `SELECT * FROM order_list ${where} ORDER BY order_id DESC 
     LIMIT ${(page - 1) * perPage}, ${perPage}`;
     [rows] = await db.query(sql);
     output = { ...output, success: true, rows, totalRows, totalPages };
@@ -110,9 +110,9 @@ router.get("/", async (req, res) => {
   }
 
   if (!req.session.admin) {
-    res.render("product-list/list", output);
+    res.render("order-list/list", output);
   } else {
-    res.render("pid/list", output);
+    res.render("order-list/list", output);
   }
 });
 
@@ -127,34 +127,43 @@ router.get("/api", async (req, res) => {
   */
 });
 
-router.get("/one/:pid", async (req, res) => {
-  let pid = +req.params.pid || 1;
-  const [rows, fields] = await db.query(
-    `SELECT * FROM product WHERE pid=${pid}`
-  );
-  if (rows.length) return res.json(rows[0]);
-  else return res.json({});
-});
-
-router.get("/add", async (req, res) => {
-  res.render("product-list/add");
-});
+// router.get("/add", async (req, res) => {
+//   res.render("order-list/add");
+// });
 router.post("/add", upload.none(), async (req, res) => {
   const output = {
     success: false,
     postData: req.body, // 除錯用
   };
 
-  const { productName, price, editTime, productDescription } = req.body;
+  const {
+    order_name,
+    coupon_id,
+    discount,
+    order_phone,
+    order_email,
+    total,
+    pay_way,
+    shipping_zipcode,
+    shipping_address,
+    delivery_way,
+  } = req.body;
   const sql =
-    "INSERT INTO `product`(`productName`, `price`, `editTime`, `productDescription`) VALUES (?, ?, NOW(), ? )";
+    "INSERT INTO `order_list`(`order_name`, `order_phone`, ` order_email`,`shipping_address`, order_date) VALUES (?, ?, ?, ?, NOW())";
 
+    //`coupon_id`, `discount`, `total`, `pay_way`,  `shipping_zipcode`,  delivery_way, 
   try {
     const [result] = await db.query(sql, [
-      productName,
-      price,
-      editTime,
-      productDescription,
+      order_name,
+      // coupon_id,
+      // discount,
+      order_phone,
+      order_email,
+      // total,
+      // pay_way,
+      // shipping_zipcode,
+      shipping_address,
+      // delivery_way,
     ]);
     output.result = result;
     output.success = !!result.affectedRows;
@@ -182,27 +191,27 @@ router.post("/add", upload.none(), async (req, res) => {
   res.json(output);
 });
 
-router.get("/edit/:pid", async (req, res) => {
-  const pid = +req.params.pid;
+router.get("/edit/:order_id", async (req, res) => {
+  const order_id = +req.params.order_id;
   res.locals.title = "編輯 | " + res.locals.title;
 
-  const sql = `SELECT * FROM product WHERE pid=?`;
-  const [rows] = await db.query(sql, [pid]);
+  const sql = `SELECT * FROM order_list WHERE order_id=?`;
+  const [rows] = await db.query(sql, [order_id]);
   if (!rows.length) {
     return res.redirect(req.baseUrl);
   }
   const row = rows[0];
   // row.birthday2 = dayjs(row.birthday).format("YYYY-MM-DD");
 
-  res.render("product-list/edit", row);
+  res.render("order-list/edit", row);
 });
 
 // 取得單筆的資料
-router.get("/api/edit/:pid", async (req, res) => {
-  const pid = +req.params.pid;
+router.get("/api/edit/:order_id", async (req, res) => {
+  const order_id = +req.params.order_id;
 
-  const sql = `SELECT * FROM product WHERE pid=?`;
-  const [rows] = await db.query(sql, [pid]);
+  const sql = `SELECT * FROM order_list WHERE order_id=?`;
+  const [rows] = await db.query(sql, [order_id]);
   if (!rows.length) {
     return res.json({ success: false });
   }
@@ -212,7 +221,7 @@ router.get("/api/edit/:pid", async (req, res) => {
   res.json({ success: true, row });
 });
 
-router.put("/edit/:pid", async (req, res) => {
+router.put("/edit/:order_id", async (req, res) => {
   const output = {
     success: false,
     postData: req.body,
@@ -220,25 +229,25 @@ router.put("/edit/:pid", async (req, res) => {
   };
   // TODO: 表單資料檢查
   req.body.address = req.body.address.trim(); // 去除頭尾空白
-  const sql = `UPDATE product SET ? WHERE pid=?`;
-  const [result] = await db.query(sql, [req.body, req.body.pid]);
+  const sql = `UPDATE order_list SET ? WHERE order_id=?`;
+  const [result] = await db.query(sql, [req.body, req.body.order_id]);
   output.result = result;
   output.success = !!result.changedRows;
 
   res.json(output);
 });
 
-router.delete("/:pid", async (req, res) => {
+router.delete("/:order_id", async (req, res) => {
   const output = {
     success: false,
     result: null,
   };
-  const pid = +req.params.pid;
-  if (!pid || pid < 1) {
+  const order_id = +req.params.order_id;
+  if (!order_id || order_id < 1) {
     return res.json(output);
   }
 
-  const sql = ` DELETE FROM product WHERE pid=${pid}`;
+  const sql = ` DELETE FROM order_list WHERE order_id=${order_id}`;
   const [result] = await db.query(sql);
   output.result = result;
   output.success = !!result.affectedRows;

@@ -25,16 +25,30 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <% if(pageName==='ab-list') { %>
-            <a class="nav-link active" href="#">ab 列表</a>
+            <a class="nav-link active" href="#">商品 列表</a>
             <% } else { %>
-            <a class="nav-link" href="/product-list">ab 列表</a>
+            <a class="nav-link" href="/product-list">商品 列表</a>
             <% } %>
           </li>
           <li class="nav-item">
             <% if(pageName==='ab-add') { %>
-            <a class="nav-link active" href="#">ab 新增</a>
+            <a class="nav-link active" href="#">商品 新增</a>
             <% } else { %>
-            <a class="nav-link" href="/product-list/add">ab 新增</a>
+            <a class="nav-link" href="/product-list/add">商品 新增</a>
+            <% } %>
+          </li>
+          <li class="nav-item">
+            <% if(pageName==='ab-list') { %>
+            <a class="nav-link active" href="#">訂單 列表</a>
+            <% } else { %>
+            <a class="nav-link" href="/order-list">訂單 列表</a>
+            <% } %>
+          </li>
+          <li class="nav-item">
+            <% if(pageName==='ab-list') { %>
+            <a class="nav-link active" href="#">訂單 add</a>
+            <% } else { %>
+            <a class="nav-link" href="/order-list">訂單 add</a>
             <% } %>
           </li>
           <li class="nav-item">

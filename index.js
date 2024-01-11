@@ -15,6 +15,8 @@ import db from "./utils/connect-mysql.js";
 
 import admin2Router from "./routes/admin2.js";
 import productListRouter from "./routes/product-list.js";
+import orderListRouter from "./routes/order-list.js";
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -121,6 +123,14 @@ app.get("/try-sess", (req, res) => {
   res.json(req.session);
 });
 
+app.use("/admins", admin2Router);
+app.use("/order-list", orderListRouter);
+app.get("/try-sess", (req, res) => {
+  req.session.n = req.session.n || 0;
+  req.session.n++;
+  res.json(req.session);
+});
+
 app.get("/try-moment", (req, res) => {
   const fm = "YYYY-MM-DD HH:mm:ss";
   const m1 = moment();
@@ -143,9 +153,16 @@ app.get("/try-moment", (req, res) => {
   });
 });
 
+// app.get("/try-db", async (req, res) => {
+//   const [results, fields] = await db.query(
+//     `SELECT * FROM \`product\` WHERE 1`
+//   );
+//   res.json(results);
+// });
+
 app.get("/try-db", async (req, res) => {
   const [results, fields] = await db.query(
-    `SELECT * FROM \`product\` WHERE 1`
+    `SELECT * FROM \`order_list\` WHERE 1`
   );
   res.json(results);
 });
