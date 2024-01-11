@@ -110,7 +110,7 @@ router.get("/", async (req, res) => {
   }
 
   if (!req.session.admin) {
-    res.render("product-list/list", output);
+    res.render("product/list", output);
   } else {
     res.render("pid/list", output);
   }
@@ -137,7 +137,7 @@ router.get("/one/:pid", async (req, res) => {
 });
 
 router.get("/add", async (req, res) => {
-  res.render("product-list/add");
+  res.render("product/add");
 });
 router.post("/add", upload.none(), async (req, res) => {
   const output = {
@@ -194,7 +194,7 @@ router.get("/edit/:pid", async (req, res) => {
   const row = rows[0];
   // row.birthday2 = dayjs(row.birthday).format("YYYY-MM-DD");
 
-  res.render("product-list/edit", row);
+  res.render("product/edit", row);
 });
 
 // 取得單筆的資料

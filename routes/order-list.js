@@ -92,7 +92,7 @@ const getListData = async (req) => {
       return { ...output, totalRows, totalPages };
     }
 
-    const sql = `SELECT * FROM order_list ${where} ORDER BY order_id DESC 
+    const sql = `SELECT * FROM order_list ${where} ORDER BY oid DESC 
     LIMIT ${(page - 1) * perPage}, ${perPage}`;
     [rows] = await db.query(sql);
     output = { ...output, success: true, rows, totalRows, totalPages };
@@ -149,7 +149,7 @@ router.post("/add", upload.none(), async (req, res) => {
     delivery_way,
   } = req.body;
   const sql =
-    "INSERT INTO `order_list`(`order_name`, `order_phone`, ` order_email`,`shipping_address`, order_date) VALUES (?, ?, ?, ?, NOW())";
+    "INSERT INTO `order`(`order_name`, `order_phone`, ` order_email`,`shipping_address`, order_date) VALUES (?, ?, ?, ?, NOW())";
 
     //`coupon_id`, `discount`, `total`, `pay_way`,  `shipping_zipcode`,  delivery_way, 
   try {
@@ -191,12 +191,12 @@ router.post("/add", upload.none(), async (req, res) => {
   res.json(output);
 });
 
-router.get("/edit/:order_id", async (req, res) => {
-  const order_id = +req.params.order_id;
+router.get("/edit/:oid", async (req, res) => {
+  const oid = +req.params.oid;
   res.locals.title = "編輯 | " + res.locals.title;
 
-  const sql = `SELECT * FROM order_list WHERE order_id=?`;
-  const [rows] = await db.query(sql, [order_id]);
+  const sql = `SELECT * FROM order_list WHERE oid=?`;
+  const [rows] = await db.query(sql, [oid]);
   if (!rows.length) {
     return res.redirect(req.baseUrl);
   }
@@ -207,11 +207,11 @@ router.get("/edit/:order_id", async (req, res) => {
 });
 
 // 取得單筆的資料
-router.get("/api/edit/:order_id", async (req, res) => {
-  const order_id = +req.params.order_id;
+router.get("/api/edit/:oid", async (req, res) => {
+  const oid = +req.params.oid;
 
-  const sql = `SELECT * FROM order_list WHERE order_id=?`;
-  const [rows] = await db.query(sql, [order_id]);
+  const sql = `SELECT * FROM order_list WHERE oid=?`;
+  const [rows] = await db.query(sql, [oid]);
   if (!rows.length) {
     return res.json({ success: false });
   }
@@ -221,7 +221,7 @@ router.get("/api/edit/:order_id", async (req, res) => {
   res.json({ success: true, row });
 });
 
-router.put("/edit/:order_id", async (req, res) => {
+router.put("/edit/:oid", async (req, res) => {
   const output = {
     success: false,
     postData: req.body,
@@ -229,25 +229,25 @@ router.put("/edit/:order_id", async (req, res) => {
   };
   // TODO: 表單資料檢查
   req.body.address = req.body.address.trim(); // 去除頭尾空白
-  const sql = `UPDATE order_list SET ? WHERE order_id=?`;
-  const [result] = await db.query(sql, [req.body, req.body.order_id]);
+  const sql = `UPDATE order_list SET ? WHERE oid=?`;
+  const [result] = await db.query(sql, [req.body, req.body.oid]);
   output.result = result;
   output.success = !!result.changedRows;
 
   res.json(output);
 });
 
-router.delete("/:order_id", async (req, res) => {
+router.delete("/:oid", async (req, res) => {
   const output = {
     success: false,
     result: null,
   };
-  const order_id = +req.params.order_id;
-  if (!order_id || order_id < 1) {
+  const oid = +req.params.oid;
+  if (!oid || oid < 1) {
     return res.json(output);
   }
 
-  const sql = ` DELETE FROM order_list WHERE order_id=${order_id}`;
+  const sql = ` DELETE FROM order_list WHERE oid=${oid}`;
   const [result] = await db.query(sql);
   output.result = result;
   output.success = !!result.affectedRows;
