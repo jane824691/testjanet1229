@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 // 解開以下可不接後端 接純假資料
 // import data from '@/data/Product.json'
-import { AB_PRODUCT_LIST } from '@/components/my-const'
+import { PRODUCT } from '@/components/my-const'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -14,7 +14,7 @@ export default function List() {
     let page = +router.query.page || 1
     if (page < 1) page = 1
     try {
-      const r = await fetch(AB_PRODUCT_LIST + `?page=${page}`)
+      const r = await fetch(PRODUCT + `?page=${page}`)
       const d = await r.json()
 
       setData(d)

@@ -64,7 +64,7 @@ export default function CartTestIndex() {
       </div>
 
       {/* 以下為測試按鈕 */}
-      <h4>測試按鈕</h4>
+      {/* <h4>測試按鈕</h4>
       <div className="btn-group-vertical">
         <button
           className="btn btn-outline-secondary"
@@ -156,9 +156,9 @@ export default function CartTestIndex() {
         >
           檢查id=222是否有在購物車中
         </button>
-      </div>
+      </div> */}
       {/* 土司訊息視窗用 */}
-      <Toaster />
+      {/* <Toaster /> */}
     </>
   )
 }

@@ -31,34 +31,34 @@ export const initState = {
 /**
  * `findOneById(items, id)` 依照某id找出項目。如果沒有找到，則返回空物件。
  */
-export const findOneById = (items, id) => {
-  return items.find((item) => String(item.id) === String(id)) || {};
+export const findOneById = (items, pid) => {
+  return items.find((item) => String(item.pid) === String(pid)) || {};
 };
 /**
  * `updateOne(items, updateItem)` 更新項目 (quantity, color, name, price...)。updateItem會覆蓋原有的item。
  */
 export const updateOne = (items, updateItem) => {
   return items.map((item) => {
-    if (String(item.id) === String(updateItem.id)) return updateItem;
+    if (String(item.pid) === String(updateItem.pid)) return updateItem;
     else return item;
   });
 };
 /**
- * `incrementOne(items, id)` 依照某id更新項目的數量+1
+ * `incrementOne(items, pid)` 依照某pid更新項目的數量+1
  */
-export const incrementOne = (items, id) => {
+export const incrementOne = (items, pid) => {
   return items.map((item) => {
-    if (String(item.id) === String(id))
+    if (String(item.pid) === String(pid))
       return { ...item, quantity: item.quantity + 1 };
     else return item;
   });
 };
 /**
- * `decrementOne(items, id)` 依照某id更新項目的數量-1。最小為1。
+ * `decrementOne(items, pid)` 依照某pid更新項目的數量-1。最小為1。
  */
-export const decrementOne = (items, id) => {
+export const decrementOne = (items, pid) => {
   return items.map((item) => {
-    if (String(item.id) === String(id)) {
+    if (String(item.pid) === String(pid)) {
       return {
         ...item,
         quantity: item.quantity - 1 > 0 ? item.quantity - 1 : 1,
@@ -67,12 +67,12 @@ export const decrementOne = (items, id) => {
   });
 };
 /**
- * `addOne(items, newItem)` 加入項目於items中。同id項目只會增加數量，不會重複加入。
+ * `addOne(items, newItem)` 加入項目於items中。同pid項目只會增加數量，不會重複加入。
  */
 export const addOne = (items, newItem) => {
   // 尋找是否有已存在的索引值
   const foundIndex = items.findIndex(
-    (item) => String(item.id) === String(newItem.id)
+    (item) => String(item.pid) === String(newItem.pid)
   );
 
   // 如果有存在，加入項目(以給定的quantity相加，或沒給定時quantity+1)
@@ -90,10 +90,10 @@ export const addOne = (items, newItem) => {
   return [...items, newItem];
 };
 /**
- * `removeOne(items, id)` 移除項目於items中。同id項目只會移除一個。
+ * `removeOne(items, pid)` 移除項目於items中。同pid項目只會移除一個。
  */
-export const removeOne = (items, id) => {
-  return items.filter((item) => String(item.id) !== String(id));
+export const removeOne = (items, pid) => {
+  return items.filter((item) => String(item.pid) !== String(pid));
 };
 
 // 以下為最後計算三者itemTotal(每項目種小計), totalItems(整體項目), cartTotal(整體總計)

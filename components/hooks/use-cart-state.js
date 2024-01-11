@@ -82,24 +82,24 @@ export const CartProvider = ({
     setCartItems(addOne(cartItems, item))
   }
   /**
-   * 給定一id值，將這商品移出陣列中
+   * 給定一pid值，將這商品移出陣列中
    */
-  const removeItem = (id) => {
-    setCartItems(removeOne(cartItems, id))
+  const removeItem = (pid) => {
+    setCartItems(removeOne(cartItems, pid))
   }
   /**
-   * 給定一item物件，更新其中的屬性值(依照id為準)
+   * 給定一item物件，更新其中的屬性值(依照pid為準)
    */
   const updateItem = (item) => {
     setCartItems(updateOne(cartItems, item))
   }
   /**
-   * 給定一id與quantity，更新某個項目的數量
+   * 給定一pid與quantity，更新某個項目的數量
    */
-  const updateItemQty = (id, quantity) => {
-    const item = findOneById(cartItems, id)
-    // 如果沒有id，則不更新
-    if (!item.id) return
+  const updateItemQty = (pid, quantity) => {
+    const item = findOneById(cartItems, pid)
+    // 如果沒有pid，則不更新
+    if (!item.pid) return
     // 更新項目
     const updateItem = { ...item, quantity }
     setCartItems(updateOne(cartItems, updateItem))
@@ -111,22 +111,22 @@ export const CartProvider = ({
     setCartItems([])
   }
   /**
-   * 給定一id值，回傳是否存在於購物車中
+   * 給定一pid值，回傳是否存在於購物車中
    */
-  const isInCart = (id) => {
-    return cartItems.some((item) => item.id === id)
+  const isInCart = (pid) => {
+    return cartItems.some((item) => item.pid === pid)
   }
   /**
-   * 給定一id值，有尋找到商品時，設定quantity: quantity + 1
+   * 給定一pid值，有尋找到商品時，設定quantity: quantity + 1
    */
-  const increment = (id) => {
-    setCartItems(incrementOne(cartItems, id))
+  const increment = (pid) => {
+    setCartItems(incrementOne(cartItems, pid))
   }
   /**
-   * 給定一id值，有尋找到商品時，設定quantity: quantity - 1，但 quantity 最小值為1
+   * 給定一pid值，有尋找到商品時，設定quantity: quantity - 1，但 quantity 最小值為1
    */
-  const decrement = (id) => {
-    setCartItems(decrementOne(cartItems, id))
+  const decrement = (pid) => {
+    setCartItems(decrementOne(cartItems, pid))
   }
 
   return (

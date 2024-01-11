@@ -2,10 +2,10 @@ export const API_SERVER = 'http://localhost:3002'
 
 export const AB_LIST = API_SERVER + '/address-book/api'
 
-export const AB_PRODUCT_LIST = API_SERVER + '/product-list/api'
-export const AB_PRODUCT = API_SERVER + '/try-db'
-export const ONE_PRODUCT = API_SERVER + '/product-list/one' // /product-list/one/2
-export const ORDER_ADD = API_SERVER + '/order-list/add'
+export const PRODUCT = API_SERVER + '/product/api'
+//export const AB_PRODUCT = API_SERVER + '/try-db'
+export const ONE_PRODUCT = API_SERVER + '/product/one' // /product/one/2
+export const ORDER_ADD = API_SERVER + '/order/add'
 
 
 

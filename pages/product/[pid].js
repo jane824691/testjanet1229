@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import Carousel from '@/components/product/carousel'
 import { useRouter } from 'next/router'
-import { AB_PRODUCT, ONE_PRODUCT } from '@/components/my-const'
-import Link from 'next/link'
+import { ONE_PRODUCT } from '@/components/my-const'
 import { useCart } from '@../../../components/hooks/use-cart-state'
 // import data from '@/data/Product.json'
 
@@ -22,7 +21,7 @@ export default function Detail() {
   //跳轉用
   const router = useRouter()
 
-  // 方法1: 從db抓JSON直接filter倒,有bug不同頁面+入的都會變同一項
+  // 去抓後端處理好的單筆資料
   useEffect(() => {
     const fetchData = async () => {
       const pid = +router.query.pid
@@ -33,27 +32,6 @@ export default function Detail() {
         const productData = await response.json()
         console.log('productData:', productData)
         setMyProduct(productData)
-        /*
-        // 如果有提供 pid，則在 productData 中尋找對應的商品
-        if (pid && Array.isArray(productData)) {
-          const selectedProduct = productData.filter(
-            (product) => product.pid === pid
-          )
-
-          if (selectedProduct) {
-            console.log('success', selectedProduct)
-
-            setMyProduct({
-              pid: selectedProduct[0].pid,
-              name: selectedProduct[0].product_name,
-              price: selectedProduct[0].product_price,
-              info: selectedProduct[0].product_description,
-            })
-          } else {
-            console.log(`Product with pid ${pid} not found.`)
-          }
-        }
-        */
       } catch (error) {
         console.error('Error fetching product data:', error)
       }
@@ -79,14 +57,11 @@ export default function Detail() {
             {myProduct.product_name}
           </h4>
 
-          <p className="product-desc">{myProduct.info}</p>
-          <ul>
-            <li>顯示顏色： 白/白/白/Summit White</li>
-            <li>款式： DJ9946-100</li>
-          </ul>
+          <p className="product-desc">{myProduct.product_description}</p>
+
           <h5 className="text-danger">
             <span>NT$ </span>
-            {myProduct.price}
+            {myProduct.product_price}
           </h5>
           <div className="col-2 ">
             <div className="d-flex amount-btn-group-wide">
@@ -121,9 +96,9 @@ export default function Detail() {
               onClick={() => {
                 addItem({
                   pid: myProduct.pid,
-                  name: myProduct.name,
+                  name: myProduct.product_name,
                   quantity: total,
-                  price: myProduct.price,
+                  price: myProduct.product_price,
                 })
               }}
             >
@@ -134,9 +109,9 @@ export default function Detail() {
               onClick={() => {
                 addItem({
                   pid: myProduct.pid,
-                  name: myProduct.name,
+                  name: myProduct.product_name,
                   quantity: total,
-                  price: myProduct.price,
+                  price: myProduct.product_price,
                 })
                 router.push('../cart')
               }}
