@@ -82,7 +82,7 @@ const getListData = async (req) => {
     return output;
   }
 
-  const t_sql = `SELECT COUNT(1) totalRows FROM order_list ${where}`;
+  const t_sql = `SELECT COUNT(1) totalRows FROM product ${where}`;
   [[{ totalRows }]] = await db.query(t_sql);
   totalPages = Math.ceil(totalRows / perPage);
   if (totalRows > 0) {
@@ -92,7 +92,7 @@ const getListData = async (req) => {
       return { ...output, totalRows, totalPages };
     }
 
-    const sql = `SELECT * FROM order_list ${where} ORDER BY oid DESC 
+    const sql = `SELECT * FROM product ${where} ORDER BY pid DESC 
     LIMIT ${(page - 1) * perPage}, ${perPage}`;
     [rows] = await db.query(sql);
     output = { ...output, success: true, rows, totalRows, totalPages };
@@ -110,9 +110,9 @@ router.get("/", async (req, res) => {
   }
 
   if (!req.session.admin) {
-    res.render("order-list/list", output);
+    res.render("product/list", output);
   } else {
-    res.render("order-list/list", output);
+    res.render("pid/list", output);
   }
 });
 
@@ -127,43 +127,34 @@ router.get("/api", async (req, res) => {
   */
 });
 
-// router.get("/add", async (req, res) => {
-//   res.render("order-list/add");
-// });
+router.get("/one/:pid", async (req, res) => {
+  let pid = +req.params.pid || 1;
+  const [rows, fields] = await db.query(
+    `SELECT * FROM product WHERE pid=${pid}`
+  );
+  if (rows.length) return res.json(rows[0]);
+  else return res.json({});
+});
+
+router.get("/add", async (req, res) => {
+  res.render("product/add");
+});
 router.post("/add", upload.none(), async (req, res) => {
   const output = {
     success: false,
     postData: req.body, // 除錯用
   };
 
-  const {
-    order_name,
-    coupon_id,
-    discount,
-    order_phone,
-    order_email,
-    total,
-    pay_way,
-    shipping_zipcode,
-    shipping_address,
-    delivery_way,
-  } = req.body;
+  const { productName, price, editTime, productDescription } = req.body;
   const sql =
-    "INSERT INTO `order`(`order_name`, `order_phone`, ` order_email`,`shipping_address`, order_date) VALUES (?, ?, ?, ?, NOW())";
+    "INSERT INTO `product`(`productName`, `price`, `editTime`, `productDescription`) VALUES (?, ?, NOW(), ? )";
 
-    //`coupon_id`, `discount`, `total`, `pay_way`,  `shipping_zipcode`,  delivery_way, 
   try {
     const [result] = await db.query(sql, [
-      order_name,
-      // coupon_id,
-      // discount,
-      order_phone,
-      order_email,
-      // total,
-      // pay_way,
-      // shipping_zipcode,
-      shipping_address,
-      // delivery_way,
+      productName,
+      price,
+      editTime,
+      productDescription,
     ]);
     output.result = result;
     output.success = !!result.affectedRows;
@@ -191,27 +182,27 @@ router.post("/add", upload.none(), async (req, res) => {
   res.json(output);
 });
 
-router.get("/edit/:oid", async (req, res) => {
-  const oid = +req.params.oid;
+router.get("/edit/:pid", async (req, res) => {
+  const pid = +req.params.pid;
   res.locals.title = "編輯 | " + res.locals.title;
 
-  const sql = `SELECT * FROM order_list WHERE oid=?`;
-  const [rows] = await db.query(sql, [oid]);
+  const sql = `SELECT * FROM product WHERE pid=?`;
+  const [rows] = await db.query(sql, [pid]);
   if (!rows.length) {
     return res.redirect(req.baseUrl);
   }
   const row = rows[0];
   // row.birthday2 = dayjs(row.birthday).format("YYYY-MM-DD");
 
-  res.render("order-list/edit", row);
+  res.render("product/edit", row);
 });
 
 // 取得單筆的資料
-router.get("/api/edit/:oid", async (req, res) => {
-  const oid = +req.params.oid;
+router.get("/api/edit/:pid", async (req, res) => {
+  const pid = +req.params.pid;
 
-  const sql = `SELECT * FROM order_list WHERE oid=?`;
-  const [rows] = await db.query(sql, [oid]);
+  const sql = `SELECT * FROM product WHERE pid=?`;
+  const [rows] = await db.query(sql, [pid]);
   if (!rows.length) {
     return res.json({ success: false });
   }
@@ -221,7 +212,7 @@ router.get("/api/edit/:oid", async (req, res) => {
   res.json({ success: true, row });
 });
 
-router.put("/edit/:oid", async (req, res) => {
+router.put("/edit/:pid", async (req, res) => {
   const output = {
     success: false,
     postData: req.body,
@@ -229,25 +220,25 @@ router.put("/edit/:oid", async (req, res) => {
   };
   // TODO: 表單資料檢查
   req.body.address = req.body.address.trim(); // 去除頭尾空白
-  const sql = `UPDATE order_list SET ? WHERE oid=?`;
-  const [result] = await db.query(sql, [req.body, req.body.oid]);
+  const sql = `UPDATE product SET ? WHERE pid=?`;
+  const [result] = await db.query(sql, [req.body, req.body.pid]);
   output.result = result;
   output.success = !!result.changedRows;
 
   res.json(output);
 });
 
-router.delete("/:oid", async (req, res) => {
+router.delete("/:pid", async (req, res) => {
   const output = {
     success: false,
     result: null,
   };
-  const oid = +req.params.oid;
-  if (!oid || oid < 1) {
+  const pid = +req.params.pid;
+  if (!pid || pid < 1) {
     return res.json(output);
   }
 
-  const sql = ` DELETE FROM order_list WHERE oid=${oid}`;
+  const sql = ` DELETE FROM product WHERE pid=${pid}`;
   const [result] = await db.query(sql);
   output.result = result;
   output.success = !!result.affectedRows;

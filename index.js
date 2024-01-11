@@ -14,7 +14,7 @@ import upload from "./utils/upload-imgs.js";
 import db from "./utils/connect-mysql.js";
 
 import admin2Router from "./routes/admin2.js";
-import productListRouter from "./routes/product-list.js";
+import productRouter from "./routes/product.js";
 import orderListRouter from "./routes/order-list.js";
 
 const app = express();
@@ -76,30 +76,6 @@ app.get("/json-sales", (req, res) => {
   res.render("json-sales", { sales });
 });
 
-app.get("/try-qs", (req, res) => {
-  res.json(req.query);
-});
-
-app.post("/try-post", (req, res) => {
-  console.log("req.body:", req.body);
-  res.json(req.body);
-});
-
-app.get("/try-post-form", (req, res) => {
-  res.render("try-post-form");
-});
-app.post("/try-post-form", (req, res) => {
-  res.render("try-post-form", req.body);
-});
-
-app.post("/try-upload", upload.single("avatar"), (req, res) => {
-  res.json(req.file);
-});
-
-app.post("/try-uploads", upload.array("photos"), (req, res) => {
-  res.json(req.files);
-});
-
 app.get("/my-params1/hello", (req, res) => {
   res.json({ hello: "shin" });
 });
@@ -116,7 +92,7 @@ app.get(/^\/m\/09\d{2}-?\d{3}-?\d{3}$/i, (req, res) => {
 });
 
 app.use("/admins", admin2Router);
-app.use("/product-list", productListRouter);
+app.use("/product", productRouter);
 app.get("/try-sess", (req, res) => {
   req.session.n = req.session.n || 0;
   req.session.n++;
@@ -131,28 +107,6 @@ app.get("/try-sess", (req, res) => {
   res.json(req.session);
 });
 
-app.get("/try-moment", (req, res) => {
-  const fm = "YYYY-MM-DD HH:mm:ss";
-  const m1 = moment();
-  const m2 = moment("12-10-11");
-  const m3 = moment("12-10-11", "DD-MM-YY");
-  const d1 = dayjs();
-  const d2 = dayjs("2023-11-15");
-  const a1 = new Date();
-  const a2 = new Date("2023-11-15");
-
-  res.json({
-    m1: m1.format(fm),
-    m2: m2.format(fm),
-    m3: m3.format(fm),
-    m1a: m1.tz("Europe/Berlin").format(fm),
-    d1: d1.format(fm),
-    d2: d2.format(fm),
-    a1,
-    a2,
-  });
-});
-
 // app.get("/try-db", async (req, res) => {
 //   const [results, fields] = await db.query(
 //     `SELECT * FROM \`product\` WHERE 1`
@@ -162,7 +116,7 @@ app.get("/try-moment", (req, res) => {
 
 app.get("/try-db", async (req, res) => {
   const [results, fields] = await db.query(
-    `SELECT * FROM \`order_list\` WHERE 1`
+    `SELECT * FROM \`order-list\` WHERE 1`
   );
   res.json(results);
 });

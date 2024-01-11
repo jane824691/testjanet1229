@@ -105,12 +105,12 @@
               <a
                 href="javascript:"
                 onclick="removeItem(event)"
-                data-order_id="<%= i.order_id %>"
+                data-oid="<%= i.oid %>"
               >
                 <i class="fa-solid fa-trash"></i>
               </a>
             </td>
-            <td><%= i.order_id %></td>
+            <td><%= i.oid %></td>
             <td><%= i.sid %></td>
             <td><%= i.order_name %></td>
             <td><%= i.coupon_id %></td>
@@ -127,7 +127,7 @@
             <td><%= i.delivery_date %></td>
             <td><%= i.order_date %></td>
             <td>
-              <a href="/order-list/edit/<%= i.order_id %>">
+              <a href="/order-list/edit/<%= i.oid %>">
                 <i class="fa-solid fa-square-pen"></i>
               </a>
             </td>
@@ -181,11 +181,11 @@
 
   const removeItem = (e) => {
     e.preventDefault();
-    const order_id = e.currentTarget.getAttribute("data-order_id");
+    const oid = e.currentTarget.getAttribute("data-oid");
 
     // TODO: 詢問用戶是否確定要刪除
 
-    fetch(`/order-list/${order_id}`, {
+    fetch(`/order-list/${oid}`, {
       method: "DELETE",
     })
       .then((r) => r.json())
