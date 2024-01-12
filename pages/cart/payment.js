@@ -128,9 +128,10 @@ export default function ConfirmIndex() {
                   <TWZipCode
                     onPostcodeChange={(country, township, postcode) => {
                       // 如果需要处理postcode变化，进行相应处理
+                      setBuyer({...buyer, postcode})
                     }}
                     initPostcode={buyer.postcode}
-                  ></TWZipCode>
+                  />
                   <h5 className="card-title font-grey-title mt-3">
                     收貨地址<span className="text-danger">*</span>
                   </h5>
