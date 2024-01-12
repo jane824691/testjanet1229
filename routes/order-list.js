@@ -139,7 +139,7 @@ router.post("/add", upload.none(), async (req, res) => {
 
   //前端叫什麼, 這邊要對應才能接收, sql才塞回table底下的欄位名稱
   const {
-    order_name,
+    name,
     coupon_id,
     discount,
     phone,
@@ -156,7 +156,7 @@ router.post("/add", upload.none(), async (req, res) => {
     //`coupon_id`, `discount`, `total`, `pay_way`,  delivery_way, 
   try {
     const [result] = await db.query(sql, [
-      order_name,
+      name,
       // coupon_id,
       // discount,
       phone,

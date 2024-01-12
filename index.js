@@ -99,13 +99,9 @@ app.get("/try-sess", (req, res) => {
   res.json(req.session);
 });
 
-app.use("/admins", admin2Router);
+
 app.use("/order-list", orderListRouter);
-app.get("/try-sess", (req, res) => {
-  req.session.n = req.session.n || 0;
-  req.session.n++;
-  res.json(req.session);
-});
+
 
 // app.get("/try-db", async (req, res) => {
 //   const [results, fields] = await db.query(
