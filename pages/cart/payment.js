@@ -53,7 +53,7 @@ export default function ConfirmIndex() {
         <div className="d-flex justify-content-center">
           <img src="/images/product/steps_to_payment.png" alt="" />
         </div>
-        <form className="list-form"  onSubmit={onSubmit}>
+        <form className="list-form" onSubmit={onSubmit}>
           <div className="d-flex justify-content-center">
             <div className="direction-column">
               <div
@@ -203,13 +203,13 @@ export default function ConfirmIndex() {
                       href="/cart"
                       role="button"
                     > */}
-                      <button
-                        type="button"
-                        className="btn btn-outline-primary btn-lg btn:active"
-                        style={{ width: '300px' }}
-                      >
-                        回前一頁
-                      </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-lg btn:active"
+                      style={{ width: '300px' }}
+                    >
+                      回前一頁
+                    </button>
                     {/* </Link> */}
                   </div>
                   <div className="col d-grid">
@@ -218,13 +218,13 @@ export default function ConfirmIndex() {
                       href="/cart/confirm"
                       role="button"
                     > */}
-                      <button
-                        type="button"
-                        className="btn btn-primary text-white btn-lg btn:active"
-                        style={{ width: '300px' }}
-                      >
-                        確認結帳
-                      </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary text-white btn-lg btn:active"
+                      style={{ width: '300px' }}
+                    >
+                      確認結帳
+                    </button>
                     {/* </Link> */}
                   </div>
                 </div>

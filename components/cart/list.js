@@ -11,13 +11,13 @@ const coupons = [
 ]
 
 export default function CartList() {
-
   // 使用hooks 解出所需的狀態與函式(自context)
   const { cart, items, decrement, increment, removeItem } = useCart()
 
   const [couponOptions, setCouponOptions] = useState(coupons)
   const [selectedCouponId, setSelectedCouponId] = useState(0)
   const [netTotal, setNetTotal] = useState(0)
+
 
   useEffect(() => {
     // 一開始沒套用折價券，netTotal和cart.totalPrice一樣
@@ -108,7 +108,7 @@ export default function CartList() {
                       <div className="card-body to-middle ">
                         <h5 className="card-title card-text align-items-center row">
                           <div className="col-5">
-                            <Link className='a-link' href={`/product/${v.pid}`}>
+                            <Link className="a-link" href={`/product/${v.pid}`}>
                               {v.name}
                             </Link>
                           </div>
@@ -196,7 +196,7 @@ export default function CartList() {
 
               <h4 className="card-text d-flex justify-content-between align-items-center mt-3">
                 總計{' '}
-                <span className="dollar" style={{fontSize: "24px"}}>
+                <span className="dollar" style={{ fontSize: '24px' }}>
                   <span>NT$</span> {netTotal}
                 </span>
               </h4>

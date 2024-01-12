@@ -2,6 +2,7 @@ import { useCart } from '@/components/hooks/use-cart-state'
 import List from '@/components/cart/list'
 import Link from 'next/link'
 import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 // cart init
 // initialState = {
@@ -12,21 +13,11 @@ import toast, { Toaster } from 'react-hot-toast'
 // }
 
 export default function CartTestIndex() {
-  {
-    /* */
-  } //可從useCart中獲取的各方法與屬性，參考README檔中說明
-  const {
-    cart,
-    items,
-    addItem,
-    removeItem,
-    updateItem,
-    updateItemQty,
-    clearCart,
-    isInCart,
-    increment,
-    decrement,
-  } = useCart()
+  //可從useCart中獲取的各方法與屬性，參考README檔中說明
+  const { items } = useCart()
+
+  //跳轉用
+  const router = useRouter()
 
   return (
     <>
@@ -47,19 +38,19 @@ export default function CartTestIndex() {
             </button>
           </Link>
 
-          <Link
-            className="nav-link  btn btn-outline-light"
-            href="/cart/payment"
-            role="button"
+          <button
+            type="button"
+            className="btn btn-danger btn-lg text-white"
+            style={{ width: 250 }}
+            onClick={() => {
+              items == 0
+                ? (console.log('items 為 0'),
+                  toast.error('須至少買一項才可結帳!!!'))
+                : router.push('../cart/payment')
+            }}
           >
-            <button
-              type="button"
-              className="btn btn-danger btn-lg text-white"
-              style={{ width: 250 }}
-            >
-              前往結帳
-            </button>
-          </Link>
+            前往結帳
+          </button>
         </div>
       </div>
 
@@ -158,7 +149,7 @@ export default function CartTestIndex() {
         </button>
       </div> */}
       {/* 土司訊息視窗用 */}
-      {/* <Toaster /> */}
+      <Toaster />
     </>
   )
 }
