@@ -136,33 +136,35 @@ router.post("/add", upload.none(), async (req, res) => {
     postData: req.body, // 除錯用
   };
 
+
+  //前端叫什麼, 這邊要對應才能接收, sql才塞回table底下的欄位名稱
   const {
     order_name,
     coupon_id,
     discount,
-    order_phone,
-    order_email,
+    phone,
+    email,
     total,
     pay_way,
-    shipping_zipcode,
-    shipping_address,
+    postcode,
+    address,
     delivery_way,
   } = req.body;
   const sql =
-    "INSERT INTO `order`(`order_name`, `order_phone`, ` order_email`,`shipping_address`, order_date) VALUES (?, ?, ?, ?, NOW())";
+    "INSERT INTO `order_list`(`order_name`, `order_phone`, `order_email`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, ?, ?, ?, ?, NOW())";
 
-    //`coupon_id`, `discount`, `total`, `pay_way`,  `shipping_zipcode`,  delivery_way, 
+    //`coupon_id`, `discount`, `total`, `pay_way`,  delivery_way, 
   try {
     const [result] = await db.query(sql, [
       order_name,
       // coupon_id,
       // discount,
-      order_phone,
-      order_email,
+      phone,
+      email,
       // total,
       // pay_way,
-      // shipping_zipcode,
-      shipping_address,
+      postcode,
+      address,
       // delivery_way,
     ]);
     output.result = result;
