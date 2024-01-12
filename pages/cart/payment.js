@@ -3,19 +3,31 @@ import { useState } from 'react'
 import Link from 'next/link'
 import TWZipCode from './TWZipCode'
 import { z } from 'zod'
-import { AB_ADD } from '@/components/my-const'
+import { ORDER_LIST_ADD } from '@/components/my-const'
 
 export default function ConfirmIndex() {
-  const [buyer, setbuyer] = useState({
-    order_name: '',
-    order_phone: '',
-    order_email: '',
-    order_address: '',
+  const [buyer, setBuyer] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    address: '',
+    postcode: '',
   })
 
   // 輸入購物者資訊用
-  const handleFieldChange = (e) => {
-    setbuyer({ ...buyer, [e.target.name]: e.target.value })
+  // const handleFieldChange = (e) => {
+  //   setBuyer({ ...buyer, [e.target.name]: e.target.value })
+  // }
+
+  const [displayInfo, setDisplayInfo] = useState('') // "", "succ", "fail"
+
+  //一次處理多項購物者資訊用
+  const changeHandler = (e, postcodeValue) => {
+    const { name, id, value } = e.target
+    console.log({ name, id, value })
+    setDisplayInfo('')
+    setBuyer({ ...buyer, [id]: value, postcode: postcodeValue })
+
   }
 
   const onSubmit = async (e) => {
@@ -26,9 +38,9 @@ export default function ConfirmIndex() {
     const emailSchema = z.coerce
       .string()
       .email({ message: '錯誤的 email 格式' })
-    console.log('emailSchema:', emailSchema.safeParse(buyer.order_email))
+    console.log('emailSchema:', emailSchema.safeParse(buyer.email))
 
-    const r = await fetch(AB_ADD, {
+    const r = await fetch(ORDER_LIST_ADD, {
       method: 'POST',
       body: JSON.stringify(buyer),
       headers: {
@@ -37,15 +49,14 @@ export default function ConfirmIndex() {
     })
     const responseData = await r.json()
     if (responseData.success) {
-      setbuyer('succ')
+      setDisplayInfo('success')
       // alert("新增成功");
     } else {
-      setbuyer('fail')
+      setDisplayInfo('fail')
       // alert("新增發生錯誤!!!");
     }
+    console.log(responseData)
   }
-
-  console.log('re-render---', new Date())
 
   return (
     <>
@@ -64,7 +75,7 @@ export default function ConfirmIndex() {
                   className="card-header card-big-title border border-0"
                   style={{ backgroundColor: 'transparent ' }}
                 >
-                  訂購人資訊
+                  收貨人資訊
                 </div>
                 <div className="card-body">
                   <h5 className="card-title font-grey-title">
@@ -74,10 +85,10 @@ export default function ConfirmIndex() {
                     className="form-control T-18 rounded-5"
                     type="text"
                     placeholder="請填姓名"
-                    aria-label="default input example"
-                    name="order_name"
-                    value={buyer.order_name}
-                    onChange={handleFieldChange}
+                    name="name"
+                    id="name"
+                    value={buyer.name}
+                    onChange={changeHandler}
                   />
                   <h5 className="card-title font-grey-title mt-3">
                     電話<span className="text-danger">*</span>
@@ -86,20 +97,20 @@ export default function ConfirmIndex() {
                     className="form-control T-18 rounded-5"
                     type="text"
                     placeholder="請填常用聯絡電話"
-                    aria-label="default input example"
-                    name="order_phone"
-                    value={buyer.order_phone}
-                    onChange={handleFieldChange}
+                    name="phone"
+                    id="phone"
+                    value={buyer.phone}
+                    onChange={changeHandler}
                   />
                   <h5 className="card-title font-grey-title mt-3">郵箱</h5>
                   <input
                     type="email"
                     className="form-control rounded-5"
-                    id="exampleFormControlInput1"
                     placeholder="name@example.com"
-                    name="order_email"
-                    value={buyer.order_email}
-                    onChange={handleFieldChange}
+                    id="email"
+                    name="email"
+                    value={buyer.email}
+                    onChange={changeHandler}
                   />
                 </div>
               </div>
@@ -111,35 +122,38 @@ export default function ConfirmIndex() {
                   className="card-header card-big-title border border-0"
                   style={{ backgroundColor: 'transparent ' }}
                 >
-                  取貨地址
+                  收貨地址
                 </div>
                 <div className="card-body">
-                  {/* <TWZipCode></TWZipCode> */}
+                  <TWZipCode
+                    onPostcodeChange={(country, township, postcode) => {
+                      // 如果需要处理postcode变化，进行相应处理
+                    }}
+                    initPostcode={buyer.postcode}
+                  ></TWZipCode>
                   <h5 className="card-title font-grey-title mt-3">
-                    取貨地址<span className="text-danger">*</span>
+                    收貨地址<span className="text-danger">*</span>
                   </h5>
                   <input
                     className="form-control rounded-5"
                     type="text"
                     placeholder="請填詳細地址"
                     aria-label="default input example"
-                    name="order_address"
-                    value={buyer.order_address}
-                    onChange={handleFieldChange}
+                    name="address"
+                    id="address"
+                    value={buyer.address}
+                    onChange={changeHandler}
                   />
                   <div className="form-check mt-3">
                     <input
                       className="form-check-input "
                       type="checkbox"
-                      defaultValue=""
-                      id="flexCheckDefault"
                       onClick={() => {
-                        // 測試帳號 herry/11111
-                        setbuyer({
-                          order_name: '王小明',
-                          order_phone: '0912345678',
-                          order_email: 'ispan@ispan.com',
-                          order_address: '復興南路一段390號2樓',
+                        setBuyer({
+                          name: '王小明',
+                          phone: '0912345678',
+                          email: 'ispan@ispan.com',
+                          address: '復興南路一段390號2樓',
                         })
                       }}
                     />
@@ -213,19 +227,24 @@ export default function ConfirmIndex() {
                     {/* </Link> */}
                   </div>
                   <div className="col d-grid">
-                    {/* <Link
-                      className="nav-link  btn btn-outline-light"
-                      href="/cart/confirm"
-                      role="button"
-                    > */}
+                    {displayInfo ? (
+                      displayInfo === 'success' ? (
+                        <div className="alert alert-success" role="alert">
+                          資料新增成功
+                        </div>
+                      ) : (
+                        <div className="alert alert-danger" role="alert">
+                          新增發生錯誤!!!
+                        </div>
+                      )
+                    ) : null}
                     <button
-                      type="button"
+                      type="submit"
                       className="btn btn-primary text-white btn-lg btn:active"
                       style={{ width: '300px' }}
                     >
                       確認結帳
                     </button>
-                    {/* </Link> */}
                   </div>
                 </div>
               </div>
