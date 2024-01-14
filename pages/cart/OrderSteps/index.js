@@ -4,6 +4,10 @@ import { useState } from 'react'
 import Cart from './sub-pages/Cart'
 import Payment from './sub-pages/Payment'
 import OrderDetail from './sub-pages/OrderDetail'
+import { useRouter } from 'next/router'
+import toast, { Toaster } from 'react-hot-toast'
+import { ORDER_LIST_ADD } from '@/components/my-const'
+import { useCart } from '@/components/hooks/use-cart-state'
 
 // 進度條
 import ProgressBar from './components/ProgressBar'
@@ -12,6 +16,11 @@ import ProgressBar from './components/ProgressBar'
 //import '@/styles/OrderSteps.css'
 
 function OrderSteps() {
+  const { items } = useCart()
+
+  //跳轉用
+  const router = useRouter()
+
   const maxSteps = 3
 
   const [step, setStep] = useState(1)
@@ -28,6 +37,7 @@ function OrderSteps() {
     address: '',
     postcode: '',
   })
+  const [netTotal, setNetTotal] = useState(0)
 
   // 動態元件語法
   const components = [Cart, Payment, OrderDetail]
@@ -38,9 +48,9 @@ function OrderSteps() {
 
   // 上一步 下一步按鈕
   const next = () => {
-    // 運送表單用檢查
+    // 購物車用檢查
     if (step === 2) {
-      const { name, address, phone } = Payment
+      const { name, address, phone, postcode } = payment
 
       // 有錯誤訊息會跳出警告，不會到"下一步"
       const errors = []
@@ -49,58 +59,77 @@ function OrderSteps() {
 
       if (!address) errors.push('住址沒填~ ')
 
+      if (!postcode) errors.push('郵遞區號沒填~ ')
+
       if (!phone) errors.push('電話沒填~ ')
 
       if (errors.length > 0) {
-        alert(errors.join(','))
+        toast.error(errors.join(','))
         return
       }
     }
 
     // 沒錯誤才會到下一步
     if (step < maxSteps) setStep(step + 1)
-    setStep(step + 1)
+
+    if (step === maxSteps) {
+      onSubmit()
+    }
   }
 
   // 上一步按鈕
   const prev = () => {
     if (step > 1) setStep(step - 1)
+    if (step === 1) router.push('../../product')
+  }
+
+  //  const [displayInfo, setDisplayInfo] = useState('') // "", "succ", "fail"
+
+  const onSubmit = async () => {
+    const r = await fetch(ORDER_LIST_ADD, {
+      method: 'POST',
+      body: JSON.stringify(payment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const responseData = await r.json()
+    if (responseData.success) {
+      toast.success('恭喜完成訂單!!')
+    } else {
+      toast.error('訂單新增失敗, 請聯繫客服')
+    }
   }
 
   return (
     <>
-      {/* 進度條 */}
-      <div style={{ display: 'none' }}>
-        <h1>訂購流程</h1>
-        <ProgressBar
-          maxSteps={maxSteps}
-          step={step}
-          progressNames={progressNames}
-        />
-      </div>
       {/* 子頁面區域 */}
       <div className="order-steps">
-        <BlockComponent payment={payment} setPaymentData={setPaymentData} />
+        <BlockComponent
+          payment={payment}
+          setPaymentData={setPaymentData}
+          netTotal={netTotal}
+          setNetTotal={setNetTotal}
+        />
       </div>
       {/* 按鈕 */}
-      <div style={{ margin: '0 auto', textAlign: 'center' }}>
+      <div style={{ margin: '0 auto', textAlign: 'center', paddingBottom: '3.75rem' }}>
         <button
           onClick={prev}
-          disabled={step === 1}
           style={{ width: 250, marginRight: 20 }}
           className="btn btn-outline-primary btn-lg"
         >
-          回上一頁
+          {step === 1 ? '回到商城' : '回前一頁'}
         </button>
         <button
           className="btn btn-danger btn-lg text-white"
           onClick={next}
-          disabled={step === maxSteps}
           style={{ width: 250 }}
         >
-          前往結帳
+          {step === maxSteps ? '完成訂單' : '確認結帳'}
         </button>
       </div>
+      <Toaster />
     </>
   )
 }

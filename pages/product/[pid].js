@@ -113,7 +113,7 @@ export default function Detail() {
                   quantity: total,
                   price: myProduct.product_price,
                 })
-                router.push('../cart')
+                router.push('../cart/OrderSteps')
               }}
             >
               加入並前往結帳

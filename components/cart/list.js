@@ -2,22 +2,21 @@ import { useCart } from '@/components/hooks/use-cart-state'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-// 範例資料
-// type: 'amount'相減，'percent'折扣
-const coupons = [
-  { id: 1, name: '折100元', value: 100, type: 'amount' },
-  { id: 2, name: '折300元', value: 300, type: 'amount' },
-  { id: 3, name: '8折券', value: 0.2, type: 'percent' },
-]
-
 export default function CartList() {
+  // 範例資料
+  // type: 'amount'相減，'percent'折扣
+  const coupons = [
+    { id: 1, name: '折100元', value: 100, type: 'amount' },
+    { id: 2, name: '折300元', value: 300, type: 'amount' },
+    { id: 3, name: '8折券', value: 0.2, type: 'percent' },
+  ]
   // 使用hooks 解出所需的狀態與函式(自context)
   const { cart, items, decrement, increment, removeItem } = useCart()
 
   const [couponOptions, setCouponOptions] = useState(coupons)
   const [selectedCouponId, setSelectedCouponId] = useState(0)
   const [netTotal, setNetTotal] = useState(0)
-
+  // const { netTotal, setNetTotal } = props
 
   useEffect(() => {
     // 一開始沒套用折價券，netTotal和cart.totalPrice一樣
@@ -51,7 +50,7 @@ export default function CartList() {
   // 修正 end
 
   return (
-    <div className="container">
+    <div className="container" style={{paddingTop: '2.5rem'}}>
       <div className="only-cart-padding">
         <div className="d-flex justify-content-center ">
           <img src="/images/product/paying_procedure_pic.png" alt="" />
