@@ -70,8 +70,8 @@ h3 {
   line-height: normal;
 }
 button:hover {
-  background-color: #ca9145;
-  color: #f9f7f6;
+  /* background-color: #ca9145;
+  color: #f9f7f6; */
   /* box-shadow: 3px 3px 3px rgb(118, 115, 115); */
 }
 .end {

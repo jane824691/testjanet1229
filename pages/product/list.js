@@ -4,11 +4,21 @@ import { useEffect, useState } from 'react'
 import { PRODUCT } from '@/components/my-const'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import ReactBsCarousel from '@/components/product/ReactBsCarousel'
+import { BsSearch } from 'react-icons/bs'
+import {
+  BsChevronRight,
+  BsChevronDoubleRight,
+  BsChevronDoubleLeft,
+  BsChevronLeft,
+} from 'react-icons/bs'
+import Pagination from 'react-bootstrap/Pagination'
 
 export default function List() {
   const [data, setData] = useState({})
   const router = useRouter()
 
+  //取page資料
   const getListData = async () => {
     console.log('router.query:', router.query)
     let page = +router.query.page || 1
@@ -27,6 +37,7 @@ export default function List() {
 
   return (
     <>
+      <ReactBsCarousel />
       <div className="web-style">
         <div className="row mt-2 mb-3">
           <h5 className="card-text d-flex justify-content-between align-items-center">
@@ -70,30 +81,27 @@ export default function List() {
         <div className="row">
           <div className="col-sm-12">
             <div className="d-flex" id="wrapper">
-              <div className="bg-white me-5" id="sidebar-wrapper">
-                <div className="scroll">
-                  <div className="cats">
-                    <div>
-                      <button type="button" className="btn">
-                        運動生活
-                      </button>
-                    </div>
-                    <div>
-                      <button type="button" className="btn">
-                        當季新品
-                      </button>
-                    </div>
-                    <div>
-                      <button type="button" className="btn">
-                        促銷
-                      </button>
-                    </div>
-                  </div>
-
+              <div className="bg-white me-3" id="sidebar-wrapper">
+                <div className="scroll" style={{ width: '15rem' }}>
                   <div
                     className="accordion accordion-flush"
                     id="accordionFlushExample"
                   >
+                    <div>
+                      <form className="navbar-form navbar-left" role="search">
+                        {/* 使用inline-block */}
+
+                        <div className="search-group">
+                          <h5 className="mb-3">篩選</h5>
+                          <input
+                            type="text"
+                            className="form-control rounded-5 search-input search-bar mb-3"
+                            placeholder="請輸入關鍵字"
+                          />
+                          <BsSearch className="BsSearch" />
+                        </div>
+                      </form>
+                    </div>
                     <div className="accordion-item">
                       <h2 className="accordion-header">
                         <button
@@ -104,7 +112,7 @@ export default function List() {
                           data-bs-target="#panelsStayOpen-collapseOne"
                           aria-controls="panelsStayOpen-collapseOne"
                         >
-                          性別
+                          分類
                         </button>
                       </h2>
                       <div
@@ -163,97 +171,6 @@ export default function List() {
                           className="accordion-button collapsed"
                           type="button"
                           data-bs-toggle="collapse"
-                          data-bs-target="#panelsStayOpen-collapseTwo"
-                          aria-expanded="false"
-                          aria-controls="panelsStayOpen-collapseTwo"
-                        >
-                          顏色
-                        </button>
-                      </h2>
-                      <div
-                        id="panelsStayOpen-collapseTwo"
-                        className="accordion-collapse collapse"
-                      >
-                        <div className="accordion-body px-1">
-                          <div className="d-flex flex-row justify-content-around mb-2">
-                            <div className="p-2">
-                              <div className="d-flex flex-column">
-                                <div>
-                                  <button
-                                    type="button"
-                                    className="btn btn-primary btn-circle"
-                                  ></button>
-                                </div>
-                                <div className="color-f">紫色</div>
-                              </div>
-                            </div>
-                            <div className="p-2">
-                              <div className="d-flex flex-column">
-                                <div>
-                                  <button
-                                    type="button"
-                                    className="btn btn-primary btn-circle"
-                                  ></button>
-                                </div>
-                                <div className="color-f">紫色</div>
-                              </div>
-                            </div>
-                            <div className="p-2">
-                              <div className="d-flex flex-column">
-                                <div>
-                                  <button
-                                    type="button"
-                                    className="btn btn-primary btn-circle"
-                                  ></button>
-                                </div>
-                                <div className="color-f">紫色</div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="d-flex flex-row justify-content-around mb-2">
-                            <div className="p-2">
-                              <div className="d-flex flex-column">
-                                <div>
-                                  <button
-                                    type="button"
-                                    className="btn btn-primary btn-circle"
-                                  ></button>
-                                </div>
-                                <div className="color-f">紫色</div>
-                              </div>
-                            </div>
-                            <div className="p-2">
-                              <div className="d-flex flex-column">
-                                <div>
-                                  <button
-                                    type="button"
-                                    className="btn btn-primary btn-circle"
-                                  ></button>
-                                </div>
-                                <div className="color-f">紫色</div>
-                              </div>
-                            </div>
-                            <div className="p-2">
-                              <div className="d-flex flex-column">
-                                <div>
-                                  <button
-                                    type="button"
-                                    className="btn btn-primary btn-circle"
-                                  ></button>
-                                </div>
-                                <div className="color-f">紫色</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="accordion-item">
-                      <h2 className="accordion-header">
-                        <button
-                          className="accordion-button collapsed"
-                          type="button"
-                          data-bs-toggle="collapse"
                           data-bs-target="#panelsStayOpen-collapseThree"
                           aria-expanded="false"
                           aria-controls="panelsStayOpen-collapseThree"
@@ -291,7 +208,7 @@ export default function List() {
                               className="form-check-label"
                               htmlFor="flexCheckChecked"
                             >
-                              $1,500 - $3,000
+                              $0 - $999
                             </label>
                           </div>
                           <div className="form-check">
@@ -305,7 +222,35 @@ export default function List() {
                               className="form-check-label"
                               htmlFor="flexCheckChecked"
                             >
-                              $3,001 - $5,999
+                              $1000 - $1999
+                            </label>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="flexCheckChecked"
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="flexCheckChecked"
+                            >
+                              $2000 - $2999
+                            </label>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="flexCheckChecked"
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="flexCheckChecked"
+                            >
+                              $3000 - $3999
                             </label>
                           </div>
                         </div>
@@ -343,16 +288,54 @@ export default function List() {
                           </div>
                         )
                       })}
+
+                    {/* 頁碼 */}
                     <div className="pages">
                       <div className="row">
                         <div className="col">
                           <nav aria-label="Page navigation example">
                             <ul className="pagination">
+                              <li>
+                                <Link
+                                  className={`page-link ${
+                                    data.page === 1 ? 'disabled' : ''
+                                  }`}
+                                  href={data.page !== 1 ? `?page=${1}` : '#'}
+                                  style={{
+                                    background:
+                                      data.page === 1
+                                        ? 'transparent'
+                                        : 'transparent',
+                                    border: 'none',
+                                    color: data.page === 1 ? '#B0B7C3' : '', // 新增此行
+                                  }}
+                                >
+                                  <BsChevronDoubleLeft />
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  className={`page-link ${
+                                    data.page === 1 ? 'disabled' : ''
+                                  }`}
+                                  href={`?page=${data.page - 1}`}
+                                  style={{
+                                    background:
+                                      data.page === 1
+                                        ? 'transparent'
+                                        : 'transparent',
+                                    border: 'none',
+                                    color: data.page === 1 ? '#B0B7C3' : '', // 新增此行
+                                  }}
+                                >
+                                  <BsChevronLeft />
+                                </Link>
+                              </li>
                               {data.success && data.totalPages
-                                ? Array(11)
+                                ? Array(7)
                                     .fill(1)
                                     .map((v, i) => {
-                                      const p = data.page - 5 + i
+                                      const p = data.page - 3 + i
                                       if (p < 1 || p > data.totalPages)
                                         return null
                                       return (
@@ -365,8 +348,25 @@ export default function List() {
                                           }
                                         >
                                           <Link
-                                            className="page-link"
+                                            className={`page-link ${
+                                              p === data.page
+                                                ? 'active-link'
+                                                : ''
+                                            }`}
                                             href={'?page=' + p}
+                                            style={{
+                                              borderRadius: '10px',
+                                              border:
+                                                p === data.page
+                                                  ? '1px solid #FFB44F'
+                                                  : '1px solid transparent',
+                                              backgroundColor:
+                                                p === data.page
+                                                  ? '#f8723f'
+                                                  : 'transparent', // 新增此行
+                                              color:
+                                                p === data.page ? '#fff' : '', // 新增此行，設定文字顏色
+                                            }}
                                           >
                                             {p}
                                           </Link>
@@ -374,6 +374,56 @@ export default function List() {
                                       )
                                     })
                                 : null}
+                              <li>
+                                <Link
+                                  className={`page-link ${
+                                    data.page === data.totalPages
+                                      ? 'disabled'
+                                      : ''
+                                  }`}
+                                  href={`?page=${data.page + 1}`}
+                                  style={{
+                                    background:
+                                      data.page === data.totalPages
+                                        ? 'transparent'
+                                        : 'transparent',
+                                    border: 'none',
+                                    color:
+                                      data.page === data.totalPages
+                                        ? '#B0B7C3'
+                                        : '', // 新增此行
+                                  }}
+                                >
+                                  <BsChevronRight />
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  className={`page-link ${
+                                    data.page === data.totalPages
+                                      ? 'disabled'
+                                      : ''
+                                  }`}
+                                  href={
+                                    data.page !== data.totalPages
+                                      ? `?page=${data.totalPages}`
+                                      : '#'
+                                  }
+                                  style={{
+                                    background:
+                                      data.page === data.totalPages
+                                        ? 'transparent'
+                                        : 'transparent',
+                                    border: 'none',
+                                    color:
+                                      data.page === data.totalPages
+                                        ? '#B0B7C3'
+                                        : '', // 新增此行
+                                  }}
+                                >
+                                  <BsChevronDoubleRight />
+                                </Link>
+                              </li>
                             </ul>
                           </nav>
                         </div>

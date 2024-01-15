@@ -104,3 +104,32 @@ border: none;
 position: absolute;
 right: 0px;
 }
+
+.search-group{
+  position: relative;
+  margin-left: 20px;
+}
+
+//調整search-bar
+// input::-webkit-input-placeholder,
+// textarea::-webkit-input-placeholder {
+//   color: #c26b6b;
+//   font-size: 16px;
+// }
+// .search-input::-webkit-input-placeholder{position: relative; left: 24px;} 
+// .search-input::-ms-input-placeholder{position: relative; left: 24px;} 
+
+.search-bar{
+  position: relative;
+  text-indent: 26px
+}
+
+.BsSearch{
+  position: absolute;
+  top: 50px;
+  left: 15px
+}
+
+.link:focus{
+  color:  #f8723f;
+}

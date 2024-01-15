@@ -96,6 +96,7 @@ function OrderSteps() {
     const responseData = await r.json()
     if (responseData.success) {
       toast.success('恭喜完成訂單!!')
+      // router.push('../../product')
     } else {
       toast.error('訂單新增失敗, 請聯繫客服')
     }
@@ -113,7 +114,13 @@ function OrderSteps() {
         />
       </div>
       {/* 按鈕 */}
-      <div style={{ margin: '0 auto', textAlign: 'center', paddingBottom: '3.75rem' }}>
+      <div
+        style={{
+          margin: '0 auto',
+          textAlign: 'center',
+          paddingBottom: '3.75rem',
+        }}
+      >
         <button
           onClick={prev}
           style={{ width: 250, marginRight: 20 }}
