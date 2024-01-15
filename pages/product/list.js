@@ -43,11 +43,6 @@ export default function List() {
           <h5 className="card-text d-flex justify-content-between align-items-center">
             <span className="ps-3">Nike Air Force 1 (91)</span>
             <div className="d-flex p-2 justify-content-end align-items-center">
-              <div className="toolbar">
-                <button className="btn btn-outline-primary" id="sidebarToggle">
-                  隱藏篩選條件 <i className="bi bi-toggles"></i>
-                </button>
-              </div>
               <div className="dropdown">
                 <button
                   className="btn btn-outline-primary dropdown-toggle"
@@ -87,10 +82,9 @@ export default function List() {
                     className="accordion accordion-flush"
                     id="accordionFlushExample"
                   >
+                    {/* 搜尋bar */}
                     <div>
                       <form className="navbar-form navbar-left" role="search">
-                        {/* 使用inline-block */}
-
                         <div className="search-group">
                           <h5 className="mb-3">篩選</h5>
                           <input
@@ -98,10 +92,14 @@ export default function List() {
                             className="form-control rounded-5 search-input search-bar mb-3"
                             placeholder="請輸入關鍵字"
                           />
-                          <BsSearch className="BsSearch" />
+                          <BsSearch
+                            className="BsSearch"
+                            style={{ color: '#FFB44F' }}
+                          />
                         </div>
                       </form>
                     </div>
+                    {/* 分類 */}
                     <div className="accordion-item">
                       <h2 className="accordion-header">
                         <button
@@ -165,6 +163,7 @@ export default function List() {
                         </div>
                       </div>
                     </div>
+                    {/* 價格範圍 */}
                     <div className="accordion-item">
                       <h2 className="accordion-header">
                         <button
@@ -290,7 +289,7 @@ export default function List() {
                       })}
 
                     {/* 頁碼 */}
-                    <div className="pages">
+                    <div className="pages mx-auto">
                       <div className="row">
                         <div className="col">
                           <nav aria-label="Page navigation example">
@@ -346,6 +345,7 @@ export default function List() {
                                               ? 'page-item active'
                                               : 'page-item'
                                           }
+                                          style={{ marginRight: '6px' }}
                                         >
                                           <Link
                                             className={`page-link ${
@@ -359,13 +359,15 @@ export default function List() {
                                               border:
                                                 p === data.page
                                                   ? '1px solid #FFB44F'
-                                                  : '1px solid transparent',
+                                                  : '1px solid ',
                                               backgroundColor:
                                                 p === data.page
                                                   ? '#f8723f'
                                                   : 'transparent', // 新增此行
                                               color:
-                                                p === data.page ? '#fff' : '', // 新增此行，設定文字顏色
+                                                p === data.page ? '#fff' : '',
+                                              width: '38px',
+                                              textAlign: 'center',
                                             }}
                                           >
                                             {p}

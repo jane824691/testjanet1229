@@ -116,8 +116,8 @@ right: 0px;
 //   color: #c26b6b;
 //   font-size: 16px;
 // }
-// .search-input::-webkit-input-placeholder{position: relative; left: 24px;} 
-// .search-input::-ms-input-placeholder{position: relative; left: 24px;} 
+.search-input::-webkit-input-placeholder{color: #807E7E} 
+.search-input::-ms-input-placeholder{color: #807E7E} 
 
 .search-bar{
   position: relative;
@@ -129,3 +129,12 @@ right: 0px;
   top: 50px;
   left: 15px
 }
+.item-select{
+  width: 16px;
+  height: 16px;
+}
+
+.option-fcolor{
+  color: #807E7E;
+}
+
