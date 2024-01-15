@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 // 子頁面(區域)
 import Cart from './sub-pages/Cart'
+import Shipping from './sub-pages/Shipping'
 import Payment from './sub-pages/Payment'
 import OrderDetail from './sub-pages/OrderDetail'
 
@@ -12,7 +13,7 @@ import ProgressBar from './components/ProgressBar'
 //import '@/styles/OrderSteps.css'
 
 function OrderSteps() {
-  const maxSteps = 3
+  const maxSteps = 4
 
   const [step, setStep] = useState(1)
 
@@ -21,26 +22,24 @@ function OrderSteps() {
   // 狀態的範例，都集中在這裡接收
   const [cartData, setCartData] = useState([])
 
-  const [payment, setPaymentData] = useState({
+  const [shipping, setShippingData] = useState({
     name: '',
-    phone: '',
-    email: '',
     address: '',
-    postcode: '',
+    phone: '',
   })
 
   // 動態元件語法
-  const components = [Cart, Payment, OrderDetail]
+  const components = [Cart, Shipping, Payment, OrderDetail]
   const BlockComponent = components[step - 1]
 
   // 進度條使用
-  const progressNames = ['購物車', '付款', '明細']
+  const progressNames = ['購物車', '運送', '付款', '明細']
 
   // 上一步 下一步按鈕
   const next = () => {
     // 運送表單用檢查
     if (step === 2) {
-      const { name, address, phone } = Payment
+      const { name, address, phone } = shipping
 
       // 有錯誤訊息會跳出警告，不會到"下一步"
       const errors = []
@@ -59,7 +58,6 @@ function OrderSteps() {
 
     // 沒錯誤才會到下一步
     if (step < maxSteps) setStep(step + 1)
-    setStep(step + 1)
   }
 
   // 上一步按鈕
@@ -69,9 +67,9 @@ function OrderSteps() {
 
   return (
     <>
+      <h1>訂購流程</h1>
       {/* 進度條 */}
-      <div style={{ display: 'none' }}>
-        <h1>訂購流程</h1>
+      <div>
         <ProgressBar
           maxSteps={maxSteps}
           step={step}
@@ -80,25 +78,15 @@ function OrderSteps() {
       </div>
       {/* 子頁面區域 */}
       <div className="order-steps">
-        <BlockComponent payment={payment} setPaymentData={setPaymentData} />
+        <BlockComponent shipping={shipping} setShippingData={setShippingData} />
       </div>
       {/* 按鈕 */}
-      <div style={{ margin: '0 auto', textAlign: 'center' }}>
-        <button
-          onClick={prev}
-          disabled={step === 1}
-          style={{ width: 250, marginRight: 20 }}
-          className="btn btn-outline-primary btn-lg"
-        >
-          回上一頁
+      <div>
+        <button onClick={prev} disabled={step === 1}>
+          上一步
         </button>
-        <button
-          className="btn btn-danger btn-lg text-white"
-          onClick={next}
-          disabled={step === maxSteps}
-          style={{ width: 250 }}
-        >
-          前往結帳
+        <button onClick={next} disabled={step === maxSteps}>
+          下一步
         </button>
       </div>
     </>
