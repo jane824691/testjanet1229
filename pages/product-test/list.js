@@ -9,6 +9,9 @@ import ProductList from './components/ProductList'
 
 import { useRouter } from 'next/router'
 import { PRODUCT } from '@/components/my-const'
+import PagesBar from './components/PagesBar'
+//import PagesBar from './components/ProductList/PagesBarTest'
+
 import Link from 'next/link'
 import {
   BsChevronRight,
@@ -36,6 +39,7 @@ export default function List() {
     getListData()
   }, [router.query.page])
 
+  console.log(data)
   console.log(data.rows)
 
   // 產品用的資料
@@ -74,7 +78,7 @@ export default function List() {
     // 模擬和伺服器要資料
     // 最後設定到狀態中
     setProducts(data.rows)
-    //setDisplayProducts(data.rows)
+    setDisplayProducts(data.rows)
   }, [data.rows])
 
   // 四個表單元素的處理方法
@@ -91,8 +95,6 @@ export default function List() {
     if (searchWord.length) {
       newProducts = products.filter((product) => {
         // includes -> String API
-        console.log(product.product_name.includes(searchWord));
-
         return product.product_name.includes(searchWord)
       })
     }
@@ -159,14 +161,24 @@ export default function List() {
 
     // 處理價格區間選項
     switch (priceRange) {
-      case '1萬以下':
+      case '$1 - $999':
         newProducts = products.filter((p) => {
-          return p.price <= 10000
+          return p.product_price <= 1000
         })
         break
-      case '1~2萬':
+      case '$1000 - $1999':
         newProducts = products.filter((p) => {
-          return p.price >= 10000 && p.price <= 20000
+          return p.price >= 1000 && p.price <= 1999
+        })
+        break
+      case '$2000 - $2999':
+        newProducts = products.filter((p) => {
+          return p.price >= 2000 && p.price <= 2999
+        })
+        break
+      case '$3000 - $3999':
+        newProducts = products.filter((p) => {
+          return p.price >= 3000 && p.price <= 3999
         })
         break
       // 指所有的產品都出現
@@ -182,7 +194,7 @@ export default function List() {
   // ps. 一開始也會載入
   useEffect(() => {
     // 搜尋字串太少不需要搜尋
-    if (searchWord.length < 3 && searchWord.length !== 0) return
+    if (searchWord.length < 2 && searchWord.length !== 0) return
 
     // 先開起載入指示器
     //    setIsLoading(true)
@@ -251,7 +263,8 @@ export default function List() {
                     <ProductList products={displayProducts} />
 
                     {/* 頁碼 */}
-                    <div className="pages mx-auto">
+                    <PagesBar data={data} />
+                    {/* <div className="pages mx-auto">
                       <div className="row">
                         <div className="col">
                           <nav aria-label="Page navigation example">
@@ -268,7 +281,7 @@ export default function List() {
                                         ? 'transparent'
                                         : 'transparent',
                                     border: 'none',
-                                    color: data.page === 1 ? '#B0B7C3' : '', // 新增此行
+                                    color: data.page === 1 ? '#B0B7C3' : '',
                                   }}
                                 >
                                   <BsChevronDoubleLeft />
@@ -286,7 +299,7 @@ export default function List() {
                                         ? 'transparent'
                                         : 'transparent',
                                     border: 'none',
-                                    color: data.page === 1 ? '#B0B7C3' : '', // 新增此行
+                                    color: data.page === 1 ? '#B0B7C3' : '',
                                   }}
                                 >
                                   <BsChevronLeft />
@@ -325,7 +338,7 @@ export default function List() {
                                               backgroundColor:
                                                 p === data.page
                                                   ? '#f8723f'
-                                                  : 'transparent', // 新增此行
+                                                  : 'transparent',
                                               color:
                                                 p === data.page ? '#fff' : '',
                                               width: '38px',
@@ -355,7 +368,7 @@ export default function List() {
                                     color:
                                       data.page === data.totalPages
                                         ? '#B0B7C3'
-                                        : '', // 新增此行
+                                        : '',
                                   }}
                                 >
                                   <BsChevronRight />
@@ -382,7 +395,7 @@ export default function List() {
                                     color:
                                       data.page === data.totalPages
                                         ? '#B0B7C3'
-                                        : '', // 新增此行
+                                        : '',
                                   }}
                                 >
                                   <BsChevronDoubleRight />
@@ -392,7 +405,7 @@ export default function List() {
                           </nav>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
