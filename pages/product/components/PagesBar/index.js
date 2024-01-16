@@ -32,7 +32,7 @@ function PagesBar({ data }) {
   );
 
   return (
-    <div className="pages mx-auto">
+    <div className="pages" style={{marginLeft: '18vw', marginTop: '5vh'}}>
       <div className="row">
         <div className="col">
           <nav aria-label="Page navigation example">

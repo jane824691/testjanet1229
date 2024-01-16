@@ -1,11 +1,11 @@
-import React from 'react';
-import Link from 'next/link';
+import React from 'react'
+import Link from 'next/link'
 import {
   BsChevronRight,
   BsChevronDoubleRight,
   BsChevronDoubleLeft,
   BsChevronLeft,
-} from 'react-icons/bs';
+} from 'react-icons/bs'
 
 function PagesBar({ data }) {
   return (
@@ -44,8 +44,8 @@ function PagesBar({ data }) {
                 ? Array(7)
                     .fill(1)
                     .map((v, i) => {
-                      const p = data.page - 3 + i;
-                      if (p < 1 || p > data.totalPages) return null;
+                      const p = data.page - 3 + i
+                      if (p < 1 || p > data.totalPages) return null
                       return (
                         <li
                           key={p}
@@ -62,7 +62,9 @@ function PagesBar({ data }) {
                             style={{
                               borderRadius: '10px',
                               border:
-                                p === data.page ? '1px solid #FFB44F' : '1px solid ',
+                                p === data.page
+                                  ? '1px solid #FFB44F'
+                                  : '1px solid ',
                               backgroundColor:
                                 p === data.page ? '#f8723f' : 'transparent',
                               color: p === data.page ? '#fff' : '',
@@ -73,7 +75,7 @@ function PagesBar({ data }) {
                             {p}
                           </Link>
                         </li>
-                      );
+                      )
                     })
                 : null}
               <li>
@@ -121,7 +123,7 @@ function PagesBar({ data }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default PagesBar;
+export default PagesBar
