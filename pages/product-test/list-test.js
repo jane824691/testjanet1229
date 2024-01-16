@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 // 解開以下可不接後端 接純假資料
 // import data from '@/data/Product.json'
 import ReactBsCarousel from '@/components/product/ReactBsCarousel'
-import SortBar from './components/SortBar/'
-import SearchBar from './components/SearchBar/'
-import FilterBar from './components/FilterBar/'
-import ProductList from './components/ProductList'
+import SortBar from './components/SortBar'
+import SearchBar from './components/SearchBar'
+import FilterBar from './components/FilterBar'
+//import ProductList from './components/ProductList'
 
 import { useRouter } from 'next/router'
 import { PRODUCT } from '@/components/my-const'
@@ -69,31 +69,15 @@ export default function List() {
     '$3000 - $3999',
   ]
 
-  // 初始化資料-didMount
-  useEffect(() => {
-    // 模擬和伺服器要資料
-    // 最後設定到狀態中
-    setProducts(data.rows)
-    //setDisplayProducts(data.rows)
-  }, [data.rows])
-
   // 四個表單元素的處理方法
   const handleSearch = (products, searchWord) => {
-    // 確保 products 是陣列
-    if (!Array.isArray(products)) {
-      console.error('products is not an array')
-      return []
-    }
-
     let newProducts = [...products]
     console.log([...products])
 
     if (searchWord.length) {
       newProducts = products.filter((product) => {
         // includes -> String API
-        console.log(product.product_name.includes(searchWord));
-
-        return product.product_name.includes(searchWord)
+        return product.name.includes(searchWord)
       })
     }
 
@@ -248,7 +232,30 @@ export default function List() {
                   <div className="row row-cols-1 row-cols-md-3 g-4">
                     {/* 如果想看純前端畫面(X後端)可解開以下帶JSON假資料 */}
                     {/* {data.map((v, i) => { */}
-                    <ProductList products={displayProducts} />
+                    {/* <ProductList products={displayProducts} /> */}
+                    {data.rows &&
+                      data.rows.map((v, i) => {
+                        return (
+                          <div className="col" key={v.pid}>
+                            <Link href={`/product/${v.pid}`} className="noline">
+                              <div className="card border-primary">
+                                <img
+                                  src="/images/product/638348807730300000 (1).jfif"
+                                  alt="name of product"
+                                  className="card-img-top"
+                                />
+                                <div className="card-body no-space-x">
+                                  <p className="card-text">{v.product_name}</p>
+                                  <span className="h-currency bold h-now">
+                                    <span>NT$ </span>
+                                    {v.product_price}
+                                  </span>
+                                </div>
+                              </div>
+                            </Link>
+                          </div>
+                        )
+                      })}
 
                     {/* 頁碼 */}
                     <div className="pages mx-auto">
