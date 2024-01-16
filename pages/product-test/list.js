@@ -7,12 +7,43 @@ import SearchBar from './components/SearchBar/'
 import FilterBar from './components/FilterBar/'
 import ProductList from './components/ProductList'
 
+import { useRouter } from 'next/router'
+import { PRODUCT } from '@/components/my-const'
+import Link from 'next/link'
+import {
+  BsChevronRight,
+  BsChevronDoubleRight,
+  BsChevronDoubleLeft,
+  BsChevronLeft,
+} from 'react-icons/bs'
+
 export default function List() {
+  const [data, setData] = useState({})
+  const router = useRouter()
 
+  //取page資料
+  const getListData = async () => {
+    let page = +router.query.page || 1
+    if (page < 1) page = 1
+    try {
+      const r = await fetch(PRODUCT + `?page=${page}`)
+      const d = await r.json()
+      setData(d)
+    } catch (ex) {}
+  }
 
+  useEffect(() => {
+    getListData()
+  }, [router.query.page])
+
+  console.log(data.rows);
+
+  
   // 產品用的資料
   // 1. 從伺服器來的原始資料
   const [products, setProducts] = useState([])
+  console.log(products);
+
   // 2. 用於網頁上經過各種處理(排序、搜尋、過濾)後的資料
   const [displayProducts, setDisplayProducts] = useState([])
 
@@ -40,11 +71,10 @@ export default function List() {
     '$3000 - $3999',
   ]
 
-  
   // 四個表單元素的處理方法
   const handleSearch = (products, searchWord) => {
     let newProducts = [...products]
-    console.log([...products]);
+    console.log([...products])
 
     if (searchWord.length) {
       newProducts = products.filter((product) => {
@@ -82,7 +112,7 @@ export default function List() {
 
   const handleTags = (products, tags) => {
     let newProducts = [...products]
-
+    console.log([...products]);
     // tags = 代表使用者目前勾選的標籤陣列
     //console.log(tags)
 
@@ -133,7 +163,7 @@ export default function List() {
     return newProducts
   }
 
-    // 當四個過濾表單元素有更動時
+  // 當四個過濾表單元素有更動時
   // componentDidUpdate + didMount
   // ps. 一開始也會載入
   useEffect(() => {
@@ -159,9 +189,6 @@ export default function List() {
 
     setDisplayProducts(newProducts)
   }, [searchWord, products, sortBy, tags, priceRange])
-
-
-
 
   return (
     <>
@@ -204,7 +231,125 @@ export default function List() {
                   <div className="row row-cols-1 row-cols-md-3 g-4">
                     {/* 如果想看純前端畫面(X後端)可解開以下帶JSON假資料 */}
                     {/* {data.map((v, i) => { */}
-<ProductList/>
+                    <ProductList products={displayProducts}/>
+
+                          {/* 頁碼 */}
+      <div className="pages mx-auto">
+        <div className="row">
+          <div className="col">
+            <nav aria-label="Page navigation example">
+              <ul className="pagination">
+                <li>
+                  <Link
+                    className={`page-link ${data.page === 1 ? 'disabled' : ''}`}
+                    href={data.page !== 1 ? `?page=${1}` : '#'}
+                    style={{
+                      background:
+                        data.page === 1 ? 'transparent' : 'transparent',
+                      border: 'none',
+                      color: data.page === 1 ? '#B0B7C3' : '', // 新增此行
+                    }}
+                  >
+                    <BsChevronDoubleLeft />
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className={`page-link ${data.page === 1 ? 'disabled' : ''}`}
+                    href={`?page=${data.page - 1}`}
+                    style={{
+                      background:
+                        data.page === 1 ? 'transparent' : 'transparent',
+                      border: 'none',
+                      color: data.page === 1 ? '#B0B7C3' : '', // 新增此行
+                    }}
+                  >
+                    <BsChevronLeft />
+                  </Link>
+                </li>
+                {data.success && data.totalPages
+                  ? Array(7)
+                      .fill(1)
+                      .map((v, i) => {
+                        const p = data.page - 3 + i
+                        if (p < 1 || p > data.totalPages) return null
+                        return (
+                          <li
+                            key={p}
+                            className={
+                              p === data.page ? 'page-item active' : 'page-item'
+                            }
+                            style={{ marginRight: '6px' }}
+                          >
+                            <Link
+                              className={`page-link ${
+                                p === data.page ? 'active-link' : ''
+                              }`}
+                              href={'?page=' + p}
+                              style={{
+                                borderRadius: '10px',
+                                border:
+                                  p === data.page
+                                    ? '1px solid #FFB44F'
+                                    : '1px solid ',
+                                backgroundColor:
+                                  p === data.page ? '#f8723f' : 'transparent', // 新增此行
+                                color: p === data.page ? '#fff' : '',
+                                width: '38px',
+                                textAlign: 'center',
+                              }}
+                            >
+                              {p}
+                            </Link>
+                          </li>
+                        )
+                      })
+                  : null}
+                <li>
+                  <Link
+                    className={`page-link ${
+                      data.page === data.totalPages ? 'disabled' : ''
+                    }`}
+                    href={`?page=${data.page + 1}`}
+                    style={{
+                      background:
+                        data.page === data.totalPages
+                          ? 'transparent'
+                          : 'transparent',
+                      border: 'none',
+                      color: data.page === data.totalPages ? '#B0B7C3' : '', // 新增此行
+                    }}
+                  >
+                    <BsChevronRight />
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className={`page-link ${
+                      data.page === data.totalPages ? 'disabled' : ''
+                    }`}
+                    href={
+                      data.page !== data.totalPages
+                        ? `?page=${data.totalPages}`
+                        : '#'
+                    }
+                    style={{
+                      background:
+                        data.page === data.totalPages
+                          ? 'transparent'
+                          : 'transparent',
+                      border: 'none',
+                      color: data.page === data.totalPages ? '#B0B7C3' : '', // 新增此行
+                    }}
+                  >
+                    <BsChevronDoubleRight />
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
                   </div>
                 </div>
               </div>

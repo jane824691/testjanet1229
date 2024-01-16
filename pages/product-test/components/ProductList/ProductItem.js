@@ -2,9 +2,10 @@
 import React from 'react'
 import Link from 'next/link'
 
-function ProductItem({ product }) {
-  const { pid, product_name, product_price } = product
-
+function ProductItem(props) {
+  const { pid, product_name, product_price } = props.product
+  console.log(props.product);
+  
   return (
     <div className="col" key={pid}>
       <Link href={`/product/${pid}`} className="noline">
