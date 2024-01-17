@@ -25,33 +25,6 @@ export default function Payment(props) {
     setPaymentData({ ...payment, [id]: value, postcode: postcodeValue })
   }
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-
-    // TODO: 檢查各個欄位的資料
-    // coerce 寬鬆的檢查方式
-    const emailSchema = z.coerce
-      .string()
-      .email({ message: '錯誤的 email 格式' })
-    console.log('emailSchema:', emailSchema.safeParse(payment.email))
-
-    const r = await fetch(ORDER_LIST_ADD, {
-      method: 'POST',
-      body: JSON.stringify(payment),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    const responseData = await r.json()
-    if (responseData.success) {
-      setDisplayInfo('success')
-      // alert("新增成功");
-    } else {
-      setDisplayInfo('fail')
-      // alert("新增發生錯誤!!!");
-    }
-    console.log(responseData)
-  }
 
   // 更改付款方式的css
   const [selectedOption, setSelectedOption] = useState(null)
@@ -65,7 +38,8 @@ export default function Payment(props) {
         <div className="d-flex justify-content-center">
           <img src="/images/product/steps_to_payment.png" alt="" />
         </div>
-        <form className="list-form" onSubmit={onSubmit}>
+        {/* onSubmit={onSubmit} */}
+        <form className="list-form">
           <div className="d-flex justify-content-center">
             <div className="direction-column">
               <div

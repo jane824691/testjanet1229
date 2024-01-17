@@ -158,7 +158,6 @@ export default function List() {
         // 原本資料裡的tags字串轉為陣列
         // 将category_id转换为字符串再转为数组
         const productTags = String(product.category_id).split(',')
-        console.log(productTags)
 
         // 将 category_id 转换为对应的标签
         const mappedTags = productTags.map(
