@@ -45,7 +45,7 @@ export default function Detail() {
 
   return (
     <>
-      <div className="row mt-5 mx-2">
+      <div className="row mt-5 mx-5 mb-5">
         <div className="col-sm-7">
           <div className="position-sticky" style={{ top: '2rem' }}>
             <Carousel />
@@ -131,31 +131,6 @@ export default function Detail() {
                     className="accordion-button collapsed"
                     type="button"
                     data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    data-bs-target="#panelsStayOpen-collapseOne"
-                    aria-controls="panelsStayOpen-collapseOne"
-                  >
-                    尺寸與版型
-                  </button>
-                </h2>
-                <div
-                  id="panelsStayOpen-collapseOne"
-                  className="accordion-collapse collapse"
-                >
-                  <div className="accordion-body px-1">
-                    <ul>
-                      <li>版型較大，建議訂購小半號</li>
-                      <li>尺寸：尺寸指南</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="accordion-item">
-                <h2 className="accordion-header">
-                  <button
-                    className="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
                     data-bs-target="#panelsStayOpen-collapseTwo"
                     aria-expanded="false"
                     aria-controls="panelsStayOpen-collapseTwo"
@@ -231,25 +206,7 @@ export default function Detail() {
           </div>
         </div>
       </div>
-      <div className="row mt-5 mx-2">
-        <div className="col-sm-12">
-          <h4 className="text-center mb-5">探索 Nike Air Force 1005 女鞋</h4>
-          <img
-            className="w-100  my-5 "
-            src="/images/product/detail/info-1.webp"
-          />
-          <p className="text-center my-5 font-weight-light fs-4">
-            鞋面採用車縫皮革裝飾片，全面提升經典指標性、耐久性和支撐力。
-          </p>
-          <img
-            className="w-100  my-5 "
-            src="/images/product/detail/info-2.webp"
-          />
-          <p className="text-center my-5 font-weight-light fs-4">
-            低筒版型，造型俐落簡練。
-          </p>
-        </div>
-      </div>
+
     </>
   )
 }

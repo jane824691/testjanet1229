@@ -190,7 +190,7 @@ export default function OrderDetail({ payment, setPaymentData }) {
                     >
                       付款方式：
                     </label>
-                    <span>信用卡</span>
+                    <span>{payment.pay_way}</span>
                   </div>
                 </div>
               </div>

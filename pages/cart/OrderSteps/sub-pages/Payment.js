@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import TWZipCode from './TWZipCode'
 import { z } from 'zod'
@@ -25,16 +24,27 @@ export default function Payment(props) {
     setPaymentData({ ...payment, [id]: value, postcode: postcodeValue })
   }
 
-
+  // 更改付款方式的css
   // 更改付款方式的css
   const [selectedOption, setSelectedOption] = useState(null)
+
   const handleRadioChange = (optionId) => {
     setSelectedOption(optionId)
+    // 根据选项设置支付方式
+    setPaymentData({
+      ...payment,
+      pay_way:
+        optionId === 'flexRadioDefault1'
+          ? '貨到付款'
+          : optionId === 'flexRadioDefault2'
+          ? '信用卡'
+          : '',
+    })
   }
 
   return (
     <>
-      <div className="container" style={{paddingTop: '2.5rem'}}>
+      <div className="container" style={{ paddingTop: '2.5rem' }}>
         <div className="d-flex justify-content-center">
           <img src="/images/product/steps_to_payment.png" alt="" />
         </div>
@@ -168,6 +178,7 @@ export default function Payment(props) {
                         id="flexRadioDefault1"
                         checked={selectedOption === 'flexRadioDefault1'}
                         onChange={() => handleRadioChange('flexRadioDefault1')}
+                        value="貨到付款"
                       />
                       <label
                         className="form-check-label mx-2"
@@ -190,6 +201,7 @@ export default function Payment(props) {
                         id="flexRadioDefault2"
                         checked={selectedOption === 'flexRadioDefault2'}
                         onChange={() => handleRadioChange('flexRadioDefault2')}
+                        value="信用卡"
                       />
                       <label
                         className="form-check-label mx-2"
@@ -204,8 +216,6 @@ export default function Payment(props) {
                   </div>
                 </div>
               </div>
-
-
             </div>
           </div>
         </form>

@@ -25,7 +25,7 @@ export default function Carousel() {
           '--swiper-pagination-color': '#fff',
         }}
         autoplay={{
-          delay: 2500,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         spaceBetween={10}
@@ -35,19 +35,34 @@ export default function Carousel() {
         className="mySwiper2"
       >
         <SwiperSlide>
-          <img src="../../images/product/638348807730300000 (1).jfif" />
+          <img
+            src="/images/product/638348807730300000 (1).jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/images/product/638348807730300000 (2).jfif" />
+          <img
+            src="/images/product/638348807730300000 (2).jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/images/product/638348807730300000 (3).jfif" />
+          <img
+            src="/images/product/638348807730300000 (3).jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/images/product/638348807730300000.jfif" />
+          <img
+            src="/images/product/638348807730300000.jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/images/product/638394484323270000.jpg" />
+          <img
+            src="/images/product/638394484323270000.jpg"
+            className="mx-auto"
+          />
         </SwiperSlide>
       </Swiper>
       <Swiper
@@ -60,19 +75,34 @@ export default function Carousel() {
         className="mySwiper"
       >
         <SwiperSlide>
-        <img src="/images/product/638348807730300000 (1).jfif" />
+          <img
+            src="/images/product/638348807730300000 (1).jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-        <img src="/images/product/638348807730300000 (2).jfif" />
+          <img
+            src="/images/product/638348807730300000 (2).jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-        <img src="/images/product/638348807730300000 (3).jfif" />
+          <img
+            src="/images/product/638348807730300000 (3).jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-        <img src="/images/product/638348807730300000.jfif" />
+          <img
+            src="/images/product/638348807730300000.jfif"
+            className="mx-auto"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/images/product/638394484323270000.jpg" />
+          <img
+            src="/images/product/638394484323270000.jpg"
+            className="mx-auto"
+          />
         </SwiperSlide>
       </Swiper>
     </>
