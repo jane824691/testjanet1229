@@ -136,58 +136,43 @@ router.post("/add", upload.none(), async (req, res) => {
     postData: req.body, // 除錯用
   };
 
+
   //前端叫什麼, 這邊要對應才能接收, sql才塞回table底下的欄位名稱
   const {
-    oid,
     name,
-    coupon_id,
-    discount,
+    //coupon_id,
+    //discount,
     phone,
     email,
-    netTotal,
+    //total,
     pay_way,
     postcode,
     address,
-    delivery_way,
+    //delivery_way,
   } = req.body;
   const sql =
-    "INSERT INTO `order_list`(`oid`, `order_name`, `order_phone`, `order_email`, `total`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+    "INSERT INTO `order_list`(`order_name`, `order_phone`, `order_email`, `pay_way`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
+    //`coupon_id`, `discount`, `total`, `pay_way`,  delivery_way, 
   try {
     const [result] = await db.query(sql, [
-      oid,
       name,
       // coupon_id,
       // discount,
       phone,
       email,
-      netTotal,
-      // pay_way,
+      //total,
+      pay_way,
       postcode,
       address,
       // delivery_way,
     ]);
     output.result = result;
     output.success = !!result.affectedRows;
-    // const {
-    //   oid,
-    //   pid,
-    //   itemTotal, // (每項目種小計) 整體項目總計 = actual_amount
-    //   totalPrice //整體項目價錢總計
-    // } = req.body;
-    // const insertId =result.insertId
-    // const sql2 =
-    // "INSERT INTO `order_child`(`oid`, `pid`, `sale_price`, `actual_amount`) VALUES (?, ?, ?, ?)";
-    // const [result2] = await db.query(sql2,[
-    //   oid,
-    //   pid,
-    //   itemTotal,
-    //   totalPrice
-    //   //items.map((item) => [0, insertId,item.oid])
-    // ])
   } catch (ex) {
     output.exception = ex;
   }
+
 
   /*
   const sql = "INSERT INTO `address_book` SET ?";
