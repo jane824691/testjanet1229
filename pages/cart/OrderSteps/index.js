@@ -94,6 +94,7 @@ function OrderSteps() {
   const requestData = {
     ...payment,
     netTotal: netTotal,
+    pid: pid,
   }
 
   const onSubmit = async () => {
@@ -125,6 +126,7 @@ function OrderSteps() {
           setPaymentData={setPaymentData}
           netTotal={netTotal}
           setNetTotal={setNetTotal}
+          pid={pid}
         />
       </div>
       {/* 按鈕 */}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useCart } from '@/components/hooks/use-cart-state'
 
-export default function OrderDetail({ payment, setPaymentData,netTotal,setNetTotal }) {
+export default function OrderDetail({ payment, setPaymentData,netTotal,setNetTotal, pid }) {
   // 範例資料
   // type: 'amount'相減，'percent'折扣
   const coupons = [
@@ -10,7 +10,7 @@ export default function OrderDetail({ payment, setPaymentData,netTotal,setNetTot
     { id: 3, name: '8折券', value: 0.2, type: 'percent' },
   ]
   // 使用hooks 解出所需的狀態與函式(自context)
-  const { cart, items, decrement, increment, removeItem } = useCart()
+  const { cart, items, quantity, decrement, increment, removeItem } = useCart()
 
   const [couponOptions, setCouponOptions] = useState(coupons)
   const [selectedCouponId, setSelectedCouponId] = useState(0)
@@ -91,7 +91,7 @@ export default function OrderDetail({ payment, setPaymentData,netTotal,setNetTot
                             {v.name}
                             <div>
                               <span>數量：</span>
-                              <span>2</span>
+                              <span>{v.quantity}</span>
                             </div>
                           </div>
                           <div className="col-3 text-end">
