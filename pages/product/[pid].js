@@ -41,8 +41,6 @@ export default function Detail() {
     fetchData()
   }, [router.query.pid])
 
-
-
   return (
     <>
       <div className="row mt-5 mx-5 mb-5">
@@ -69,7 +67,9 @@ export default function Detail() {
                 type="button"
                 className="btn btn-outline-secondary amount-btnL"
                 onClick={() => {
-                  setTotal(total - 1)
+                  if (total > 1) {
+                    setTotal(total - 1)
+                  }
                 }}
               >
                 -
@@ -206,7 +206,6 @@ export default function Detail() {
           </div>
         </div>
       </div>
-
     </>
   )
 }
