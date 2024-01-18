@@ -130,49 +130,77 @@ router.get("/api", async (req, res) => {
 // router.get("/add", async (req, res) => {
 //   res.render("order-list/add");
 // });
-router.post("/add", upload.none(), async (req, res) => {
-  const output = {
-    success: false,
-    postData: req.body, // 除錯用
-  };
+// router.post("/add", upload.none(), async (req, res) => {
+//   const output = {
+//     success: false,
+//     postData: req.body, // 除錯用
+//   };
 
+//   //前端叫什麼, 這邊要對應才能接收, sql才塞回table底下的欄位名稱
+//   const {
+//     name,
+//     //coupon_id,
+//     //discount,
+//     phone,
+//     email,
+//     netTotal,
+//     pay_way,
+//     postcode,
+//     address,
+//     //delivery_way,
+//   } = req.body;
+//   const sql =
+//     "INSERT INTO `order_list`(`order_name`, `order_phone`, `order_email`, `total`, `pay_way`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
 
-  //前端叫什麼, 這邊要對應才能接收, sql才塞回table底下的欄位名稱
-  const {
-    name,
-    //coupon_id,
-    //discount,
-    phone,
-    email,
-    //total,
-    pay_way,
-    postcode,
-    address,
-    //delivery_way,
-  } = req.body;
-  const sql =
-    "INSERT INTO `order_list`(`order_name`, `order_phone`, `order_email`, `pay_way`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+//   //`coupon_id`, `discount`, `total`, `pay_way`,  delivery_way,
+//   try {
+//     const [result] = await db.query(sql, [
+//       name,
+//       // coupon_id,
+//       // discount,
+//       phone,
+//       email,
+//       netTotal,
+//       pay_way,
+//       postcode,
+//       address,
+//       // delivery_way,
+//     ]);
 
-    //`coupon_id`, `discount`, `total`, `pay_way`,  delivery_way, 
-  try {
-    const [result] = await db.query(sql, [
-      name,
-      // coupon_id,
-      // discount,
-      phone,
-      email,
-      //total,
-      pay_way,
-      postcode,
-      address,
-      // delivery_way,
-    ]);
-    output.result = result;
-    output.success = !!result.affectedRows;
-  } catch (ex) {
-    output.exception = ex;
-  }
+//     const {
+//       oid,
+//       pid,
+//       sale_price,
+//       actual_amount,
+//     } = req.body;
+//     const sql2 =
+//       "INSERT INTO `order_child`(`oid`, `pid`, `sale_price`, `actual_amount`) VALUES ((SELECT oid FROM `order_list` ORDER BY `order_date` DESC LIMIT 1), ?, ?, ?)";
 
+//     try {
+//       const [result2] = await db.query(sql2, [
+//         oid,
+//         pid,
+//         sale_price,
+//         actual_amount,
+//       ]);
+
+    // output.result = result
+    // cansole.log(result.insertId)
+    // const insertId = result.insertId
+    // const items = req.body.items
+
+    // "INSERT INTO course order detail (course order detail id', 'course order Id', 'course id) VALUES"
+    // const sql2 = "INSERT INTO `order_child`(`oid`, `pid`, `sale_price`, `actual_amount`) VALUES (?, ?, ?, ?)";
+    // const [result2] = await db.query(sq12, [
+    // item.map((item) => [0, insertId, item.oid])
+    // ])
+    // res.json(output);
+
+  //   output.result = result;
+  //   output.success = !!result.affectedRows;
+  // } catch (ex) {
+  //   output.exception = ex;
+  // }
 
   /*
   const sql = "INSERT INTO `address_book` SET ?";
@@ -191,8 +219,75 @@ router.post("/add", upload.none(), async (req, res) => {
   //   "changedRows": 0    # 修改時真正有變動的資料筆數
   // }
 
+//   res.json(output);
+// });
+
+
+router.post("/add", upload.none(), async (req, res) => {
+  const output = {
+    success: false,
+    postData: req.body,
+  };
+
+  const {
+    name,
+    phone,
+    email,
+    netTotal,
+    pay_way,
+    postcode,
+    address,
+  } = req.body;
+
+  try {
+
+    const sql1 =
+      "INSERT INTO `order_list`(`order_name`, `sid`, `order_phone`, `order_email`, `total`, `pay_way`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, 1, ?, ?, ?, ?, ?, ?, NOW())";
+
+    const [result1] = await db.query(sql1, [
+      name,
+      phone,
+      email,
+      netTotal,
+      pay_way,
+      postcode,
+      address,
+    ]);
+
+    const insertedOrderId = result1.insertId;
+
+    const { pid, sale_price, actual_amount } = req.body;
+    const sql2 =
+      "INSERT INTO `order_child`(`oid`, `pid`, `sale_price`, `actual_amount`) VALUES (?, ?, ?, ?)";
+
+    const [result2] = await db.query(sql2, [
+      insertedOrderId,
+      pid,
+      sale_price,
+      actual_amount,
+    ]);
+
+    output.result = {
+      order_list: result1,
+      order_child: result2,
+    };
+
+    output.success = !!result1.affectedRows && !!result2.affectedRows;
+  } catch (ex) {
+
+  output.exception = ex;
+  output.exception = {
+    message: ex.message,
+    stack: ex.stack,
+  };
+
+  }
+
   res.json(output);
 });
+
+
+
 
 router.get("/edit/:oid", async (req, res) => {
   const oid = +req.params.oid;
