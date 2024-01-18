@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import toast, { Toaster } from 'react-hot-toast'
 import { ORDER_LIST_ADD } from '@/components/my-const'
 import { useCart } from '@/components/hooks/use-cart-state'
+import{totalPrice} from '@/components/hooks/cart-reducer-state'
 
 // 進度條
 import ProgressBar from './components/ProgressBar'
@@ -74,6 +75,8 @@ function OrderSteps() {
     if (step < maxSteps) setStep(step + 1)
 
     if (step === maxSteps) {
+      setNetTotal(()=>{return totalPrice(items)})
+      console.log(netTotal,'要在這邊變更總金額');
       onSubmit()
     }
   }
@@ -86,10 +89,17 @@ function OrderSteps() {
 
   //  const [displayInfo, setDisplayInfo] = useState('') // "", "succ", "fail"
 
+  // console.log({items,netTotal});
+
+  const requestData = {
+    ...payment,
+    netTotal: netTotal,
+  }
+
   const onSubmit = async () => {
     const r = await fetch(ORDER_LIST_ADD, {
       method: 'POST',
-      body: JSON.stringify(payment),
+      body: JSON.stringify(requestData),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -104,6 +114,7 @@ function OrderSteps() {
       toast.error('訂單新增失敗, 請聯繫客服')
     }
   }
+
 
   return (
     <>

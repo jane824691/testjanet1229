@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useCart } from '@/components/hooks/use-cart-state'
 
-export default function OrderDetail({ payment, setPaymentData }) {
+export default function OrderDetail({ payment, setPaymentData,netTotal,setNetTotal }) {
   // 範例資料
   // type: 'amount'相減，'percent'折扣
   const coupons = [
@@ -14,8 +14,7 @@ export default function OrderDetail({ payment, setPaymentData }) {
 
   const [couponOptions, setCouponOptions] = useState(coupons)
   const [selectedCouponId, setSelectedCouponId] = useState(0)
-  const [netTotal, setNetTotal] = useState(0)
-  // const { netTotal, setNetTotal } = props
+  // const [netTotal, setNetTotal] = useState(0)
 
   useEffect(() => {
     // 一開始沒套用折價券，netTotal和cart.totalPrice一樣

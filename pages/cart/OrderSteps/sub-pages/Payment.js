@@ -25,7 +25,6 @@ export default function Payment(props) {
   }
 
   // 更改付款方式的css
-  // 更改付款方式的css
   const [selectedOption, setSelectedOption] = useState(null)
 
   const handleRadioChange = (optionId) => {

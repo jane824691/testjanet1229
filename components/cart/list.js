@@ -2,7 +2,7 @@ import { useCart } from '@/components/hooks/use-cart-state'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-export default function CartList() {
+export default function CartList(props) {
   // 範例資料
   // type: 'amount'相減，'percent'折扣
   const coupons = [
@@ -15,13 +15,13 @@ export default function CartList() {
 
   const [couponOptions, setCouponOptions] = useState(coupons)
   const [selectedCouponId, setSelectedCouponId] = useState(0)
-  const [netTotal, setNetTotal] = useState(0)
+  // const [netTotal, setNetTotal] = useState(0)
   // const { netTotal, setNetTotal } = props
 
   useEffect(() => {
     // 一開始沒套用折價券，netTotal和cart.totalPrice一樣
     if (!selectedCouponId) {
-      setNetTotal(cart.totalPrice)
+      // props.setNetTotal(cart.totalPrice)
       return
     }
 
@@ -33,7 +33,7 @@ export default function CartList() {
         ? cart.totalPrice - coupon.value
         : Math.round(cart.totalPrice * (1 - coupon.value))
 
-    setNetTotal(newNetTotal)
+    props.setNetTotal(newNetTotal)
   }, [cart.totalPrice, selectedCouponId])
 
   // 修正 Next hydration 問題
@@ -42,7 +42,7 @@ export default function CartList() {
 
   useEffect(() => {
     setHydrated(true)
-  }, [])
+  }, [props])
 
   if (!hydrated) {
     return null
@@ -196,7 +196,7 @@ export default function CartList() {
               <h4 className="card-text d-flex justify-content-between align-items-center mt-3">
                 總計{' '}
                 <span className="dollar" style={{ fontSize: '24px' }}>
-                  <span>NT$</span> {netTotal}
+                  <span>NT$</span> {cart.totalPrice}
                 </span>
               </h4>
             </div>
