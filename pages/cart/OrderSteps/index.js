@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import toast, { Toaster } from 'react-hot-toast'
 import { ORDER_LIST_ADD } from '@/components/my-const'
 import { useCart } from '@/components/hooks/use-cart-state'
-import{totalPrice} from '@/components/hooks/cart-reducer-state'
+import { totalPrice } from '@/components/hooks/cart-reducer-state'
 
 // 進度條
 import ProgressBar from './components/ProgressBar'
@@ -31,6 +31,10 @@ function OrderSteps() {
   // 狀態的範例，都集中在這裡接收
   const [cartData, setCartData] = useState([])
 
+  // 狀態的範例，都集中在這裡接收
+  const [selectedProducts, setSelectedProducts] = useState({})
+
+  // console.log(selectedProducts);
   const [payment, setPaymentData] = useState({
     name: '',
     phone: '',
@@ -75,8 +79,10 @@ function OrderSteps() {
     if (step < maxSteps) setStep(step + 1)
 
     if (step === maxSteps) {
-      setNetTotal(()=>{return totalPrice(items)})
-      console.log(netTotal,'要在這邊變更總金額');
+      setNetTotal(() => {
+        return totalPrice(items)
+      })
+      console.log(netTotal, '要在這邊變更總金額')
       onSubmit()
     }
   }
@@ -94,9 +100,13 @@ function OrderSteps() {
   const requestData = {
     ...payment,
     netTotal: netTotal,
-    pid: pid,
+    pid: selectedProducts.pid,
+    sale_price: selectedProducts.sale_price,
+    actual_amount: selectedProducts.actual_amount,
+    email: payment.email,
   }
-
+  console.log(payment)
+  console.log(selectedProducts);
   const onSubmit = async () => {
     const r = await fetch(ORDER_LIST_ADD, {
       method: 'POST',
@@ -107,7 +117,7 @@ function OrderSteps() {
     })
     const responseData = await r.json()
     if (responseData.success) {
-      toast.success('恭喜完成訂單!! 3秒後跳轉回商城')
+      toast.success('恭喜完成訂單!!')
       // setTimeout(() => {
       //   router.push('../../product')
       // }, 3000)
@@ -115,7 +125,6 @@ function OrderSteps() {
       toast.error('訂單新增失敗, 請聯繫客服')
     }
   }
-
 
   return (
     <>
@@ -126,7 +135,9 @@ function OrderSteps() {
           setPaymentData={setPaymentData}
           netTotal={netTotal}
           setNetTotal={setNetTotal}
-          pid={pid}
+          selectedProducts={selectedProducts}
+          setSelectedProducts={setSelectedProducts}
+          //pid={pid}
         />
       </div>
       {/* 按鈕 */}
