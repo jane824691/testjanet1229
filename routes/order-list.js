@@ -223,12 +223,78 @@ router.get("/api", async (req, res) => {
 // });
 
 
+// 一次建兩張表, 但都各只有一筆
+// router.post("/add", upload.none(), async (req, res) => {
+//   const output = {
+//     success: false,
+//     postData: req.body,
+//   };
+
+//   const {
+//     name,
+//     phone,
+//     email,
+//     netTotal,
+//     pay_way,
+//     postcode,
+//     address,
+//   } = req.body;
+
+//   try {
+
+//     const sql1 =
+//       "INSERT INTO `order_list`(`order_name`, `sid`, `order_phone`, `order_email`, `total`, `pay_way`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, 1, ?, ?, ?, ?, ?, ?, NOW())";
+
+//     const [result1] = await db.query(sql1, [
+//       name,
+//       phone,
+//       email,
+//       netTotal,
+//       pay_way,
+//       postcode,
+//       address,
+//     ]);
+
+//     const insertedOrderId = result1.insertId;
+
+//     const { pid, sale_price, actual_amount } = req.body;
+//     const sql2 =
+//       "INSERT INTO `order_child`(`oid`, `pid`, `sale_price`, `actual_amount`) VALUES (?, ?, ?, ?)";
+
+//     const [result2] = await db.query(sql2, [
+//       insertedOrderId,
+//       pid,
+//       sale_price,
+//       actual_amount,
+//     ]);
+
+//     output.result = {
+//       order_list: result1,
+//       order_child: result2,
+//     };
+
+//     output.success = !!result1.affectedRows && !!result2.affectedRows;
+//   } catch (ex) {
+
+//   output.exception = ex;
+//   output.exception = {
+//     message: ex.message,
+//     stack: ex.stack,
+//   };
+
+//   }
+
+//   res.json(output);
+// });
+
+
 router.post("/add", upload.none(), async (req, res) => {
   const output = {
     success: false,
     postData: req.body,
   };
 
+  // 準備存進第一張order_list, name是前端定義接收的名字
   const {
     name,
     phone,
@@ -240,7 +306,6 @@ router.post("/add", upload.none(), async (req, res) => {
   } = req.body;
 
   try {
-
     const sql1 =
       "INSERT INTO `order_list`(`order_name`, `sid`, `order_phone`, `order_email`, `total`, `pay_way`, `shipping_zipcode`, `shipping_address`, `order_date`) VALUES (?, 1, ?, ?, ?, ?, ?, ?, NOW())";
 
@@ -254,37 +319,47 @@ router.post("/add", upload.none(), async (req, res) => {
       address,
     ]);
 
+
+    // 準備同時生成第2張表order_child + 同一筆oid對很多商品
     const insertedOrderId = result1.insertId;
 
     const { pid, sale_price, actual_amount } = req.body;
-    const sql2 =
-      "INSERT INTO `order_child`(`oid`, `pid`, `sale_price`, `actual_amount`) VALUES (?, ?, ?, ?)";
 
-    const [result2] = await db.query(sql2, [
-      insertedOrderId,
-      pid,
-      sale_price,
-      actual_amount,
-    ]);
+    let result2;  // 在這裡宣告 result2
 
-    output.result = {
-      order_list: result1,
-      order_child: result2,
-    };
+    if (Array.isArray(pid) && Array.isArray(sale_price) && Array.isArray(actual_amount) &&
+        pid.length === sale_price.length && sale_price.length === actual_amount.length) {
 
-    output.success = !!result1.affectedRows && !!result2.affectedRows;
+      const sql2 =
+        "INSERT INTO `order_child`(`oid`, `pid`, `sale_price`, `actual_amount`) VALUES (?, ?, ?, ?)";
+
+      for (let i = 0; i < pid.length; i++) {
+        [result2] = await db.query(sql2, [insertedOrderId, pid[i], sale_price[i], actual_amount[i]]);
+      }
+
+      output.result = {
+        order_list: result1,
+        order_child: result2,
+      };
+
+      output.success = !!result1.affectedRows && !!result2.affectedRows;
+    } else {
+      // Handle case where pid, sale_price, and actual_amount are not arrays or have different lengths
+      output.success = !!result1.affectedRows;
+      output.result = { order_list: result1 };
+    }
   } catch (ex) {
-
-  output.exception = ex;
-  output.exception = {
-    message: ex.message,
-    stack: ex.stack,
-  };
-
+    output.exception = {
+      message: ex.message,
+      stack: ex.stack,
+    };
   }
 
   res.json(output);
 });
+
+
+
 
 
 
