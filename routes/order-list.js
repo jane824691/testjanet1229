@@ -11,10 +11,6 @@ router.use((req, res, next) => {
   if (req.method === "GET" && u === "/") {
     return next();
   }
-  /*
-  if (!req.session.admin) {
-    return res.redirect("/login");
-  } */
   next();
 });
 
