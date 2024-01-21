@@ -5,6 +5,9 @@ export const AB_LIST = API_SERVER + '/address-book/api'
 export const PRODUCT = API_SERVER + '/product/api' //list
 export const ONE_PRODUCT = API_SERVER + '/product/one' // /product/one/2
 export const ORDER_LIST_ADD = API_SERVER + '/order-list/add'
+export const ORDER_LIST = API_SERVER + '/order-list/api'
+export const ONE_ORDER = API_SERVER + '/order-list/one' // /order-list/one/2
+
 
 
 

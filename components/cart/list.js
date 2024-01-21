@@ -49,8 +49,11 @@ export default function CartList(props) {
   }
   // 修正 end
 
+  // const imagePath = product_img
+  // ? `/image/product/${product_img}`
+  // : '/images/product/638348807730300000 (1).jfif'
   return (
-    <div className="container" style={{paddingTop: '2.5rem'}}>
+    <div className="container" style={{ paddingTop: '2.5rem' }}>
       <div className="only-cart-padding">
         <div className="d-flex justify-content-center ">
           <img src="/images/product/paying_procedure_pic.png" alt="" />
@@ -98,7 +101,7 @@ export default function CartList(props) {
                         id=""
                       />
                       <img
-                        src="/images/product/638348807730300000 (1).jfif"
+                        src={`../../../image/product/${v.img}`}
                         alt="name of product"
                         className="img-thumbnail"
                       />

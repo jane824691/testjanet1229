@@ -167,7 +167,7 @@ export default function OrderDetail({
                         <div className="row extinct-product" key={v.pid}>
                           <div className="col-3">
                             <img
-                              src="/images/product/638348807730300000 (1).jfif"
+                              src={`../../../image/product/${v.img}`}
                               alt="name of product"
                               className="img-thumbnail"
                             />

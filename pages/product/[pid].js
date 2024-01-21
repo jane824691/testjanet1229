@@ -13,6 +13,7 @@ export default function Detail() {
 
   const [myProduct, setMyProduct] = useState({
     pid: '',
+    img: '',
     name: '',
     price: '',
     info: '',
@@ -99,6 +100,7 @@ export default function Detail() {
                   name: myProduct.product_name,
                   quantity: total,
                   price: myProduct.product_price,
+                  img: myProduct.product_img,
                 })
               }}
             >
@@ -112,6 +114,7 @@ export default function Detail() {
                   name: myProduct.product_name,
                   quantity: total,
                   price: myProduct.product_price,
+                  img: myProduct.product_img,
                 })
                 router.push('../cart/OrderSteps')
               }}
