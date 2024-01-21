@@ -15,7 +15,7 @@ router.use((req, res, next) => {
 });
 
 const getListData = async (req) => {
-  const perPage = 12; // 每頁幾筆
+  const perPage = 6; // 每頁幾筆
   let page = +req.query.page || 1; // 用戶決定要看第幾頁
   let keyword =
     req.query.keyword && typeof req.query.keyword === "string"
@@ -42,18 +42,18 @@ const getListData = async (req) => {
     endDate = "";
   }
 
-  let where = ` WHERE 1 `;
+  let where = ` WHERE sid = 1 `;
   if (keyword) {
     qs.keyword = keyword;
     where += ` AND ( \`name\` LIKE ${keyword_} OR \`phone\` LIKE ${keyword_} ) `;
   }
   if (startDate) {
     qs.startDate = startDate;
-    where += ` AND birthday >= '${startDate}' `;
+    where += ` AND order_date >= '${startDate}' `;
   }
   if (endDate) {
     qs.endDate = endDate;
-    where += ` AND birthday <= '${endDate}' `;
+    where += ` AND order_date <= '${endDate}' `;
   }
 
   let totalRows = 0;
@@ -356,6 +356,14 @@ router.post("/add", upload.none(), async (req, res) => {
 
 
 
+router.get("/one/:oid", async (req, res) => {
+  let oid = +req.params.oid || 1;
+  const [rows, fields] = await db.query(
+    `SELECT o.sid, o.order_name, c.pid, p.product_name, p.product_img, c.sale_price, c.actual_amount FROM order_list o INNER JOIN order_child c ON (c.oid = o.oid) INNER JOIN product p ON (p.pid = c.pid) WHERE o.oid = ${oid};`
+  );
+  if (rows.length) return res.json(rows); // 直接回傳所有資料
+  else return res.json({});
+});
 
 
 
@@ -370,7 +378,7 @@ router.get("/edit/:oid", async (req, res) => {
     return res.redirect(req.baseUrl);
   }
   const row = rows[0];
-  // row.birthday2 = dayjs(row.birthday).format("YYYY-MM-DD");
+  // row.order_date2 = dayjs(row.order_date).format("YYYY-MM-DD");
 
   res.render("order-list/edit", row);
 });
@@ -385,7 +393,7 @@ router.get("/api/edit/:oid", async (req, res) => {
     return res.json({ success: false });
   }
   const row = rows[0];
-  row.birthday = dayjs(row.birthday).format("YYYY-MM-DD");
+  row.order_date = dayjs(row.order_date).format("YYYY-MM-DD");
 
   res.json({ success: true, row });
 });
