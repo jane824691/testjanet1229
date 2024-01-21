@@ -6,6 +6,14 @@ import '@/styles/TWZipCode.scss'
 import '@/styles/game.css'
 import '@/styles/profile.scss'
 import '@/styles/Modal.scss'
+import '@/css/CarouselSwiper.css'
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
+
+import '@/css/CarouselSwiper.css'
+
 import DefaultLayout from '@/components/layout/default-layout'
 import { AuthContextProvider } from '@/components/contexts/AuthContext'
 AuthContextProvider

@@ -10,6 +10,7 @@ import ProductList from './components/ProductList'
 import { useRouter } from 'next/router'
 import { PRODUCT } from '@/components/my-const'
 import PagesBar from './components/PagesBar'
+import CarouselSwiper from '@/components/product/CarouselSwiper'
 //import PagesBar from './components/ProductList/PagesBarTest'
 
 import Link from 'next/link'
