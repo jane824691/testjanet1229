@@ -42,38 +42,44 @@ function ProductList() {
                 key={v.pid}
                 style={{ width: '13rem', marginRight: '10px', display: 'flex' }}
               >
-                {/* <Link href={`/product/${v.pid}`} className="noline"> */}
-                <span
-                  className="card border-primary col"
-                  style={{
-                    width: '12.5rem',
-                    marginRight: '10px',
-                    display: 'flex',
-                  }}
+                <Link
+                  href={`/product/${v.pid}`}
+                  style={{ textDecoration: 'none' }}
                 >
-                  <img
-                    src="/images/product/638348807730300000 (1).jfif"
-                    alt="name of product"
-                    className="card-img-top"
-                  />
-                  <div className="card-body no-space-x">
-                    <p className="card-text">{v.product_name}</p>
-                    <span className="h-currency bold h-now">
-                      <span>NT$ </span>
-                      {v.product_price}
-                    </span>
-                  </div>
-                </span>
+                  <span
+                    className="card border-primary col"
+
+                  >
+                    <img
+                      src={`/image/product/${v.product_img}`}
+                      alt="name of product"
+                      className="card-img-top"
+                    />
+                    <div className="card-body no-space-x">
+                      <p className="card-text">{v.product_name}</p>
+                      <span className="h-currency bold h-now">
+                        <span>NT$ </span>
+                        {v.product_price}
+                      </span>
+                    </div>
+                  </span>
+                </Link>
               </div>
             )
           })}
       </div>
-      <div style={{display: 'flex', justifyContent: 'center' }} className='mb-5'>
+      <div
+        style={{ display: 'flex', justifyContent: 'center' }}
+        className="mb-5"
+      >
         {' '}
         <button
           type="button"
           className="btn btn-outline-danger btn-lg rounded-5"
-          style={{ width: 250}}
+          style={{ width: 250 }}
+          onClick={() => {
+            router.push('../product/list')
+          }}
         >
           商城購物去
         </button>

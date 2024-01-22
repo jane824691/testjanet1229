@@ -5,27 +5,34 @@ import { ONE_ORDER } from '@/components/my-const'
 export default function OrderUnderMember() {
   //跳轉用
   const router = useRouter()
-
-  const [myOrder, setMyOrder] = useState({
-    oid: '',
-    img: '',
-    name: '',
-    price: '',
-    quantity: '',
-  })
-  // 去抓後端處理好的資料
-  //取page資料
-  const getListData = async () => {
-    try {
-      const r = await fetch(ONE_ORDER + `?oid=${oid}`)
-      const d = await r.json()
-      setData(d)
-    } catch (ex) {}
-  }
+  const [data, setData] = useState([])
+  const [orderData, setOrderData] = useState([])
 
   useEffect(() => {
-    getListData()
-  }, [router.query.page])
+    const fetchData = async () => {
+      const oid = +router.query.oid
+
+      try {
+        const response = await fetch(ONE_ORDER + `/${oid}`)
+        const responseData = await response.json()
+
+        // 確保 responseData 是一個陣列
+        if (Array.isArray(responseData)) {
+          console.log('orderData:', responseData)
+          setOrderData(responseData)
+        } else {
+          console.error('Error: Data is not an array')
+        }
+      } catch (error) {
+        console.error('Error fetching product data:', error)
+      }
+    }
+
+    // 呼叫 fetchData 以觸發資料載入
+    fetchData()
+  }, [router.query.oid])
+
+  console.log(orderData)
   return (
     <>
       <form className="list-form">
@@ -44,34 +51,35 @@ export default function OrderUnderMember() {
                     購物明細
                   </div>
                   <div className="card-body">
-                    {/* {items.map((v, i) => {
-                      return ( 
-                        key={v.oid}
-                        */}
-                        <div className="row extinct-product">
-                          <div className="col-3">
-                            <img
-                              //src={`../../../image/product/${v.img}`}
-                              alt="name of product"
-                              className="img-thumbnail"
-                            />
+                    {orderData.map((v, i) => (
+                      <div className="row extinct-product" key={v.oid}>
+                        <div className="col-3">
+                          <img
+                            src={`../image/product/${v.product_img}`}
+                            alt="name of product"
+                            className="img-thumbnail"
+                          />
+                        </div>
+                        <div className="col-6">
+                          {v.product_name}
+                          <div>
+                            <span>數量：</span>
+                            <span>{v.actual_amount}</span>
                           </div>
-                          <div className="col-6">
-                            {/* {v.name} */}
-                            <div>
-                              <span>數量：</span>
-                              {/* <span>{v.quantity}</span> */}
-                            </div>
-                          </div>
-                          <div className="col-3 text-end">
-                            <div className="dollar">
-                              <span>NT$</span>
-                              {/* <span>{v.subtotal}</span> */}
-                            </div>
+                          <div>
+                            <span>特價：</span>
+                            <span>{v.sale_price}</span>
                           </div>
                         </div>
-                      {/* )
-                    })} */}
+                        <div className="col-3 text-end">
+                          <div className="dollar">
+                            <span>NT$</span>
+                            <span>{v.sale_price * v.actual_amount}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
                     {/* <div className="row card-padding12">
                     <div className="col-9">折扣金額</div>
                     <div className="col-3 text-end">
@@ -84,10 +92,12 @@ export default function OrderUnderMember() {
                     <div className="row card-padding12">
                       <div className="col-9 dollar">本訂單總花費金額</div>
                       <div className="col-3 text-end">
-                        <div className="dollar">
-                          <span>NT$</span>
-                          <span></span>
-                        </div>
+                        {orderData.length > 0 && (
+                          <div className="dollar">
+                            <span>NT$</span>
+                            <span>{orderData[0].total}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -109,7 +119,9 @@ export default function OrderUnderMember() {
                     >
                       姓名：
                     </label>
-                    <span></span>
+                    {orderData.length > 0 && (
+                      <span>{orderData[0].order_name}</span>
+                    )}
                     <br />
                     <label
                       htmlFor="validationCustom01"
@@ -117,7 +129,9 @@ export default function OrderUnderMember() {
                     >
                       電話：
                     </label>
-                    <span></span>
+                    {orderData.length > 0 && (
+                      <span>{orderData[0].order_phone}</span>
+                    )}
                     <br />
                     <label
                       htmlFor="validationCustom01"
@@ -125,7 +139,9 @@ export default function OrderUnderMember() {
                     >
                       Email：
                     </label>
-                    <span></span>
+                    {orderData.length > 0 && (
+                      <span>{orderData[0].order_email}</span>
+                    )}
                   </div>
                   <div
                     className="card-header card-big-title border border-0"
@@ -141,7 +157,13 @@ export default function OrderUnderMember() {
                       取貨地址：
                     </label>
                     <span>
-                      台北市大安區
+                      台北市大安區{' '}
+                      {orderData.length > 0 && (
+                        <span>
+                          {orderData[0].shipping_zipcode}
+                          {orderData[0].shipping_address}
+                        </span>
+                      )}
                     </span>
                   </div>
                   <div
@@ -157,7 +179,9 @@ export default function OrderUnderMember() {
                     >
                       付款方式：
                     </label>
-                    <span></span>
+                    {orderData.length > 0 && (
+                      <span>{orderData[0].pay_way}</span>
+                    )}
                   </div>
                 </div>
               </div>
