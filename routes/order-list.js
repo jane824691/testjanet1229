@@ -359,7 +359,11 @@ router.post("/add", upload.none(), async (req, res) => {
 router.get("/one/:oid", async (req, res) => {
   let oid = +req.params.oid || 1;
   const [rows, fields] = await db.query(
-    `SELECT o.sid, o.order_name, c.pid, p.product_name, p.product_img, c.sale_price, c.actual_amount FROM order_list o INNER JOIN order_child c ON (c.oid = o.oid) INNER JOIN product p ON (p.pid = c.pid) WHERE o.oid = ${oid};`
+    `SELECT DISTINCT o.sid, o.order_name, o.total, o.order_phone, o.order_email, o.shipping_zipcode, o.shipping_address, o.pay_way, p.pid, p.product_name, p.product_img, c.sale_price, c.actual_amount
+    FROM order_list o
+    INNER JOIN order_child c ON c.oid = o.oid
+    INNER JOIN product p ON p.pid = c.pid
+    WHERE o.oid IN (SELECT oid FROM order_child) AND o.oid = ${ oid };`
   );
   if (rows.length) return res.json(rows); // 直接回傳所有資料
   else return res.json({});
