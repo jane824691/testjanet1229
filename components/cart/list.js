@@ -5,9 +5,8 @@ import Link from 'next/link'
 // 範例資料
 // type: 'amount'相減，'percent'折扣
 const coupons = [
-  { id: 1, name: '折100元', value: 100, type: 'amount' },
-  { id: 2, name: '折300元', value: 300, type: 'amount' },
-  { id: 3, name: '8折券', value: 0.2, type: 'percent' },
+  { id: 1, name: '折50元', value: 50, type: 'amount' },
+  { id: 2, name: '折80元', value: 80, type: 'amount' },
 ]
 
 export default function CartList() {
@@ -26,7 +25,7 @@ export default function CartList() {
     }
 
     const coupon = couponOptions.find((v) => v.id === selectedCouponId)
-
+    console.log(coupon)
     // type: 'amount'相減，'percent'折扣
     const newNetTotal =
       coupon.type === 'amount'
@@ -35,6 +34,7 @@ export default function CartList() {
 
     setNetTotal(newNetTotal)
   }, [cart.totalPrice, selectedCouponId])
+
 
   // 修正 Next hydration 問題
   // https://stackoverflow.com/questions/72673362/error-text-content-does-not-match-server-rendered-html
@@ -165,7 +165,7 @@ export default function CartList() {
 
             <div className="card total-card border-0 mt-5">
               <h4 className="mb-3 underline-w">摘要</h4>
-              <div className="d-flex justify-content-between align-items-center underline-w">
+              {/* <div className="d-flex justify-content-between align-items-center underline-w">
                 <h5>折價券</h5>
                 <div>
                   <select
@@ -185,7 +185,7 @@ export default function CartList() {
                     })}
                   </select>
                 </div>
-              </div>
+              </div> */}
 
               <h5 className="card-text d-flex justify-content-between align-items-center underline-w mt-3">
                 處理費/郵資 <span>NT$ 30</span>

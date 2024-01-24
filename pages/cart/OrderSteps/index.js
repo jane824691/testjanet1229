@@ -17,7 +17,7 @@ import ProgressBar from './components/ProgressBar'
 //import '@/styles/OrderSteps.css'
 
 function OrderSteps() {
-  const { items } = useCart()
+  const { items, clearCart } = useCart()
 
   //跳轉用
   const router = useRouter()
@@ -54,6 +54,12 @@ function OrderSteps() {
 
   // 上一步 下一步按鈕
   const next = () => {
+    if (step === 1) {
+      if (!(items.length > 0)) {
+        toast.error('至少有一項商品才可結帳!')
+        return
+      }
+    }
     // 購物車用檢查
     if (step === 2) {
       const { name, address, phone, postcode } = payment
@@ -119,6 +125,7 @@ function OrderSteps() {
       toast.success('恭喜完成訂單!! 3秒後跳轉回商城')
       setTimeout(() => {
         router.push('../../product')
+        clearCart()
       }, 3000)
     } else {
       toast.error('訂單新增失敗, 請聯繫客服')

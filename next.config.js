@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  images: {
+    domains: ['via.placeholder.com', 'localhost'],
+  },
   env: {
     API_SERVER2: 'http://localhost:3002',
-  }
+  },
 }
 
 module.exports = nextConfig
-
 
 
 // const nextConfig = {

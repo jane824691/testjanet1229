@@ -110,7 +110,9 @@ export default function Detail() {
                 })
               }}
             >
-              <i className="bi bi-cart"></i> <div> 加入購物車</div>
+              <div className="d-flex justify-content-center">
+                <i className="bi bi-cart mx-2"></i> <div> 加入購物車</div>
+              </div>
             </button>
             <button
               className="btn btn-danger text-white add-cart-danger"

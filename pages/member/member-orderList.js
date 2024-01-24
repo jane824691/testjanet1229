@@ -103,70 +103,77 @@ export default function MemberOrderList() {
     <>
       <div className="container d-flex">
         {/* 左邊欄位 */}
-        <div className={styles.leftList}>
-          <div className={styles.memberPicOut}>
-            <Image
-              alt=""
-              src="/pics/cat.jpg"
-              className={styles.memberPic}
-              width={160}
-              height={120}
-            ></Image>
-          </div>
-
-          <div className={styles.memberItems}>
-            <br></br>
-            <div className={styles.name}>會員名稱</div>
-            <br></br>
-            {auther.account ? (
-              <>
-                <div className={styles.name}>
-                  <span>{auther.account}</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={styles.name}>
-                  <span style={{ color: 'white' }}></span>User
-                </div>
-              </>
-            )}
-            <br></br>
-            <div className={styles.nowLocationOut}>
-              <div className={styles.nowLocation}>編輯個人資料</div>
+        <div>
+          <div className={styles.leftList}>
+            <div className={styles.memberPicOut}>
+              <Image
+                alt=""
+                src={
+                  mydata.photo
+                    ? `http://localhost:3002/img/${mydata.photo}`
+                    : '/pics/headshot.jpg'
+                }
+                className={styles.memberPic}
+                width="140"
+                height="140"
+              ></Image>
             </div>
-          </div>
 
-          <div className={styles.iconsOut}>
-            <div className={styles.icons}>
+            <div className={styles.memberItems}>
               <br></br>
-              <div className={styles.icon}>
-                <BsFillTicketDetailedFill className={styles.iconSick} />
-                <Link className={styles.iconLink} href="favorite/coupon2">
-                  {' '}
-                  優惠券管理
-                </Link>
+              <div className={styles.name}>會員名稱</div>
+              <br></br>
+              {auther.account ? (
+                <>
+                  <div className={styles.name}>
+                    <span>{auther.account}</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.name}>
+                    <span style={{ color: 'white' }}></span>User
+                  </div>
+                </>
+              )}
+              <br></br>
+              <div className={styles.nowLocationOut}>
+                <div className={styles.nowLocation}>編輯個人資料</div>
               </div>
-              <div className={styles.icon}>
-                <BsCart4 className={styles.iconSick} />
-                <Link
-                  className={styles.iconLink}
-                  href="../member/member-orderList"
-                >
-                  {' '}
-                  購物清單
-                </Link>
-              </div>
-              <div className={styles.icon}>
-                <BsFillTrophyFill className={styles.iconSick} />
-                <Link className={styles.iconLink} href="favorite/game">
-                  {' '}
-                  簽到任務
-                </Link>
+            </div>
+
+            <div className={styles.iconsOut}>
+              <div className={styles.icons}>
+                <br></br>
+                <div className={styles.icon}>
+                  <BsFillTicketDetailedFill className={styles.iconSick} />
+                  <Link className={styles.iconLink} href="favorite/coupon2">
+                    {' '}
+                    優惠券管理
+                  </Link>
+                </div>
+                <div className={styles.icon}>
+                  <BsCart4 className={styles.iconSick} />
+                  <Link
+                    className={styles.iconLink}
+                    href="/member/member-orderList"
+                  >
+                    {' '}
+                    購物清單
+                  </Link>
+                </div>
+                <div className={styles.icon}>
+                  <BsFillTrophyFill className={styles.iconSick} />
+                  <Link className={styles.iconLink} href="favorite/game">
+                    {' '}
+                    簽到任務
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div className="mx-auto">
           <h3>購物清單</h3>
           {data.rows &&

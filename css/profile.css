@@ -5,4 +5,14 @@
 
 .btn.pro-shadow {
   box-shadow: none;
+}
+
+.error-input {
+  border: #ffffff;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }/*# sourceMappingURL=profile.css.map */

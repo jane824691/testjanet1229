@@ -13,7 +13,13 @@ export default function Home() {
       <main>
         <div className="container ">
           <div style={{ display: 'flex' }}>
-            <Image src="/pics/homepage.png" width="1000" height="700" alt="" />
+            <Image
+              src="/pics/homepage_act.gif"
+              width="1000"
+              height="700"
+              alt=""
+              style={{borderRadius: '20%', marginRight: '40px'}}
+            />
             <div
               style={{
                 display: 'flex',
