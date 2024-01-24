@@ -130,7 +130,7 @@ router.get("/api", async (req, res) => {
 router.get("/one/:pid", async (req, res) => {
   let pid = +req.params.pid || 1;
   const [rows, fields] = await db.query(
-    `SELECT * FROM product WHERE pid=${pid}`
+    `SELECT DISTINCT product.*, product_mutiple_img.photo_content_main, product_mutiple_img.photo_content_secondary, product_mutiple_img.photo_content FROM product LEFT JOIN product_mutiple_img ON product.pid = product_mutiple_img.pid WHERE product.pid = ${pid};`
   );
   if (rows.length) return res.json(rows[0]);
   else return res.json({});
@@ -163,8 +163,8 @@ router.post("/add", upload.none(), async (req, res) => {
   }
 
   /*
-  const sql = "INSERT INTO `address_book` SET ?";
-  // INSERT INTO `address_book` SET `name`='abc',
+  const sql = "INSERT INTO address_book SET ?";
+  // INSERT INTO address_book SET `name`='abc',
   req.body.created_at = new Date();
   const [result] = await db.query(sql, [req.body]);
   */

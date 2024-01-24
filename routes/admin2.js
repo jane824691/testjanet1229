@@ -7,7 +7,7 @@ router.get("/admin2/:p1?/:p2?", (req, res) => {
     url,
     baseUrl,
     originalUrl,
-    params: { p1, p2 },
+    params: { p1, p2 }, //params解構成p1,p2
   } = req;
 
   res.json({
