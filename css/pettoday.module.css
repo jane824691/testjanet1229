@@ -1,0 +1,311 @@
+.main{
+  height: 1000px;
+  display: flex;
+}
+.leftList{
+  /* border: 5px solid pink; */
+  width: 230px;
+  display: inline-block;
+  justify-content: center;
+  margin-left: 250px;
+  margin-top: 30px;
+}
+.leftListTop{
+  display: inline-block;
+  justify-content: center;
+}
+.memberPicOut{
+  width: 100%;
+  /* border: 5px solid rgb(227, 72, 20); */
+  display: flex;
+  justify-content: center;
+}
+
+.memberPic{
+  width: 140px;
+  height: 140px;
+  border-radius: 100px;  
+}
+
+.memberItems{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 5px solid #CA9145;
+}
+
+.name{
+  color: #845F2D;
+  font-weight: 600;
+}
+
+.nowLocationOut{
+  color: #CA9145;
+  background-color: #F6E7D0;
+  border-radius: 10px;
+}
+
+.iconsOut{
+  display: flex;
+  justify-content: center;
+
+}
+.icons{
+  /* width: 150px; */
+  text-decoration: none;
+  /* padding-right: 10px; */
+}
+.icon{
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border: 1px ;
+}
+.icon:hover {
+  background-color: #F8723F;
+  border-radius: 10px;
+}
+.iconSick{
+  width:15px;
+  height: 15px; 
+  /* padding: 20px; */
+  color: #FFB44F;
+  margin-right: 5px;
+}
+.iconSick:hover {
+  color:white
+}
+
+.iconLink{
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.iconLink1{
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+}
+
+.iconSick1{
+  width:15px;
+  height: 15px; 
+  /* padding: 20px; */
+  color: #ffffff;
+  margin-right: 5px;
+}
+
+
+.icon1{
+  border: 1px ;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 20px;
+  background-color: #F8723F ;
+  color: white;
+}
+
+/* 為了那個hover */
+.iconLink:hover {
+  color:white
+}
+
+.iconLink:hover .iconSick{
+  color:white
+}
+.icon:hover .iconSick{
+  color:white
+}
+.icon:hover .iconLink{
+  color: white;
+}
+/* 為了那個hover */
+
+.mypetList{
+  width: 100%;
+  display: inline-flex;  
+  margin-bottom: 20px;
+}
+
+.petCard{
+  width: 80px;
+  height: 100px;
+  border-radius: 20px;  
+}
+.petList{
+  width:100px;
+  height:50px;
+  line-height:50px;
+  padding:10px;
+  color:#401E11;
+  border-radius: 10px; 
+}
+
+.myBody{
+  width: 70%;
+  padding-top: 30px;
+  text-align: center;  
+  }
+
+  .myBody1{
+    width: 90%;
+    text-align: center;  
+    }
+
+  .myBodylist{
+    display: flex;
+    padding-right: 15%;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;  
+    }
+
+  .petPicOut{
+    width: 100%;
+    /* border: 5px solid rgb(227, 72, 20); */
+    display: flex;
+    justify-content: center;
+  }
+  
+  .petPic{
+    width: 90px;
+    height: 90px;
+    border-radius: 100px;  
+  }
+
+  .petname{
+    color: #F8723F;
+    font-weight: 600;
+    text-align: center;
+    text-shadow: 1px 1px 0 #FFB44F;
+  }
+
+  .titleline{
+    border-bottom: 5px solid #FFB44F; 
+    color: #401E11;
+    text-decoration: none; 
+  }
+
+  .titleline1{
+    color: #401E11;
+    text-decoration: none; 
+  }
+
+  .titleline:hover {
+    border-bottom: 5px solid #F8723F;
+    background-color: #FFB44F;
+    border-radius: 80%;  
+  }
+
+  .titleline1:hover{
+    border-bottom: 5px solid #F8723F;
+    background-color: #FFB44F;
+    border-radius: 80%; 
+  }
+
+  .titleline1:active {
+    color: rgb(255, 255, 255);
+  }
+
+  .titleline:active {
+    color: rgb(255, 255, 255);
+  }
+
+  .center1{
+    color:#401E11;
+    text-align: left;
+    
+  }
+  .center2{
+
+    color:#FFB44F;
+    text-align: left;
+  }
+
+  .statusicon{
+    background:#FFB44F;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white; 
+    padding:7px 7px;
+    width: 32px;
+    height: 32px;
+    box-sizing:content-box    
+  }
+  
+  .centericon{
+    width:60px;
+    color:#F8723F;
+  }
+
+  .centericon:hover{
+    color: rgb(239, 12, 12);
+    padding:7px 7px;
+    width: 20px;
+    height: 20px;
+    box-sizing:content-box
+  }
+
+  .date
+{
+	width: 90px; 
+	height:90px;
+	background-color: #fcfcfc;
+    padding-left: 0px;
+    padding-right: 0px;
+
+	/* <!-- 設定漸變色; --> */
+	background: linear-gradient(top, #fcfcfc 0%,#dad8d8 100%);
+	background: -moz-linear-gradient(top, #fcfcfc 0%, #dad8d8 100%); 
+	background: -webkit-linear-gradient(top, #fcfcfc 0%,#dad8d8 100%);
+	
+	border: 1px solid #d2d2d2;
+	/* <!-- 設定弧角; --> */
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+
+	/* <!-- 設定陰影; -->	 */
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+/* <!-- 設定整格文字式樣; --> */
+.date p
+{
+	font-family: Helvetica, sans-serif; 
+	font-size: 16px; text-align: center; color:#F8723F;
+	margin: 0px;
+}
+
+/* <!-- 設定月份式樣. 因為月份在底部, 故須修改其弧位; --> */
+.date p .month{
+	background-color:#F8723F;; 
+	background: linear-gradient(top, #FFB44F 0%, #F8723F 100%);
+	background: -moz-linear-gradient(top, #FFB44F 0%, #F8723F 100%);
+	background: -webkit-linear-gradient(top, #FFB44F 0%, #F8723F 100%);
+	font-size: 12px; font-weight: bold; color: #fff; text-transform: uppercase; 	
+	display: block;
+	border-top: 3px solid #FFB44F;
+	border-radius: 0 0 10px 10px;
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-radius: 0 0 10px 10px;
+	padding: 6px 0 6px 0;
+}
+
+/* <!-- 設定年份式樣. 因為年份在頂部, 故須修改其弧位; --> */
+.date p .year{
+	background-color: #FFB44F; 
+	background: linear-gradient(top, #FFB44F 0%, #F8723F 100%);
+	background: -moz-linear-gradient(top, #FFB44F 0%, #F8723F 100%);
+	background: -webkit-linear-gradient(top, #FFB44F 0%, #F8723F 100%);
+	font-size: 12px; font-weight: bold; color: #fff; text-transform: uppercase; 	
+	display: block;
+	border-top: 3px solid #FFB44F;
+	border-radius: 10px 10px 0 0;
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-radius: 10px 10px 0 0;
+	padding: 6px 0 6px 0;
+}

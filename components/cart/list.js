@@ -2,26 +2,26 @@ import { useCart } from '@/components/hooks/use-cart-state'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-export default function CartList(props) {
-  // 範例資料
-  // type: 'amount'相減，'percent'折扣
-  const coupons = [
-    { id: 1, name: '折100元', value: 100, type: 'amount' },
-    { id: 2, name: '折300元', value: 300, type: 'amount' },
-    { id: 3, name: '8折券', value: 0.2, type: 'percent' },
-  ]
+// 範例資料
+// type: 'amount'相減，'percent'折扣
+const coupons = [
+  { id: 1, name: '折100元', value: 100, type: 'amount' },
+  { id: 2, name: '折300元', value: 300, type: 'amount' },
+  { id: 3, name: '8折券', value: 0.2, type: 'percent' },
+]
+
+export default function CartList() {
   // 使用hooks 解出所需的狀態與函式(自context)
   const { cart, items, decrement, increment, removeItem } = useCart()
 
   const [couponOptions, setCouponOptions] = useState(coupons)
   const [selectedCouponId, setSelectedCouponId] = useState(0)
-  // const [netTotal, setNetTotal] = useState(0)
-  // const { netTotal, setNetTotal } = props
+  const [netTotal, setNetTotal] = useState(0)
 
   useEffect(() => {
     // 一開始沒套用折價券，netTotal和cart.totalPrice一樣
     if (!selectedCouponId) {
-      // props.setNetTotal(cart.totalPrice)
+      setNetTotal(cart.totalPrice)
       return
     }
 
@@ -33,7 +33,7 @@ export default function CartList(props) {
         ? cart.totalPrice - coupon.value
         : Math.round(cart.totalPrice * (1 - coupon.value))
 
-    props.setNetTotal(newNetTotal)
+    setNetTotal(newNetTotal)
   }, [cart.totalPrice, selectedCouponId])
 
   // 修正 Next hydration 問題
@@ -42,21 +42,22 @@ export default function CartList(props) {
 
   useEffect(() => {
     setHydrated(true)
-  }, [props])
+  }, [])
 
   if (!hydrated) {
     return null
   }
   // 修正 end
 
-  // const imagePath = product_img
-  // ? `/image/product/${product_img}`
-  // : '/images/product/638348807730300000 (1).jfif'
   return (
-    <div className="container" style={{ paddingTop: '2.5rem' }}>
+    <div className="container">
       <div className="only-cart-padding">
         <div className="d-flex justify-content-center ">
-          <img src="/images/product/paying_procedure_pic.png" alt="" />
+          <img
+            src="/images/product/paying_procedure_pic.png"
+            alt=""
+            style={{ paddingTop: '2.5rem' }}
+          />
         </div>
 
         <div className="row list-form">
@@ -199,7 +200,7 @@ export default function CartList(props) {
               <h4 className="card-text d-flex justify-content-between align-items-center mt-3">
                 總計{' '}
                 <span className="dollar" style={{ fontSize: '24px' }}>
-                  <span>NT$</span> {cart.totalPrice}
+                  <span>NT$</span> {netTotal}
                 </span>
               </h4>
             </div>

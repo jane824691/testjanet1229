@@ -17,7 +17,7 @@ export default function ConfirmIndex() {
             <div className="direction-column">
               <div
                 className="card border-primary mb-3"
-                style={{ width: "40rem" }}
+                style={{ width: '40rem' }}
               >
                 <div className="card-header card-big-title border border-0" style={{ backgroundColor: 'transparent '}}>購物明細</div>
                 <div className="card-body">
@@ -100,7 +100,7 @@ export default function ConfirmIndex() {
               </div>
               <div
                 className="card border-primary mb-3"
-                style={{ width: "40rem" }}
+                style={{ width: '40rem' }}
               >
                 <div className="card-header card-big-title border border-0" style={{ backgroundColor: 'transparent '}}>訂購人資訊</div>
                 <div className="card-body">
@@ -194,5 +194,5 @@ export default function ConfirmIndex() {
         </div>
       </div>
     </>
-  );
+  )
 }

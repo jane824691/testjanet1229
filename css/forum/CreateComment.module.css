@@ -1,0 +1,47 @@
+.writtenComment{
+    width: 640px;
+    border: 1px solid #F6E7D0;
+    background-color: #F6E7D0;
+    border-radius: 0 0 10px 10px;
+}
+.writtenId{
+    color: white;
+    margin-top: -15px;
+}
+.buttonGiveAndSend{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.buttonGive{
+    width: 130px;
+    height: 48px;
+    background-color: #FFB44F;
+    border: #FFB44F 1px solid;
+    color: white;
+    border-radius: 8px;
+    margin-right: 10px;
+
+}
+
+
+.buttonSend{
+    width: 130px;
+    height: 48px;
+    background-color: #FFB44F;
+    border: #FFB44F 1px solid;
+    color: white;
+    border-radius: 8px;
+
+}
+
+
+.buttonGive:hover {
+ background-color: #F8723F;
+}
+
+.buttonSend:hover {
+ background-color: #F8723F;
+
+}

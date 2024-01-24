@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { createContext, useEffect, useState } from 'react'
 
 const AuthContext = createContext({})
@@ -23,14 +24,16 @@ export const AuthContextProvider = ({ children }) => {
           const { sid, account, token } = data
           setAuther({ sid, account, token })
         }
-      } catch (ex) {}
+      } catch (ex) {
+        console.error('Error parsing authentication data:', ex)
+      }
     }
   }, [])
 
   // 登出
   const logout = () => {
     // 登出時, 清除 localStorage 的記錄
-    localStorage.removeItem('auth')
+    localStorage.removeItem('auther')
     setAuther(initAuth)
   }
 

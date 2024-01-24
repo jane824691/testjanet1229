@@ -1,153 +1,167 @@
- import { MdPets } from "react-icons/md";
- import { FaBookMedical } from "react-icons/fa";
- import { ImCalculator } from "react-icons/im";
-
- import Pagination from 'react-bootstrap/Pagination';
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import styles from '@/css/diary.module.css'
-import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link'
+import { BsPencilSquare } from 'react-icons/bs'
+import AuthContext from '@/components/contexts/AuthContext'
+import { useContext } from 'react'
+// 載入分頁元件
+import BS5Pagination from '@/components/common/bs5-pagination'
+
+import VerticalNavBar from '@/pages/diary/vertical-nav-bar'
+
+import { useRouter } from 'next/router'
+
 export default function Home() {
+  // const [data, setData] = useState({})
+  const router = useRouter()
+  const [owner, setOwner] = useState(1)
+  const { auther } = useContext(AuthContext)
+
+  // 分頁用
+  const [page, setPage] = useState(1)
+  const [perpage, setPerpage] = useState(5)
+
+  // 最後得到的項目
+  const [itemTotal, setItemTotal] = useState(0)
+  const [pageCount, setPageCount] = useState(0)
+  const [items, setItems] = useState([])
+
+  //取page資料
+  const getPetListData = async (params) => {
+    // 用URLSearchParams產生查詢字串
+    const searchParams = new URLSearchParams(params)
+
+    // console.log(searchParams.toString())
+
+    const res = await axios.get(
+      `http://localhost:3002/diary/pet/list?${searchParams.toString()}`
+    )
+
+    if (res.data.status === 'success') {
+      // 設定獲取頁數總合
+      setItemTotal(res.data.data.total)
+      // 設定獲取項目
+      setItems(res.data.data.pets)
+      setPage(res.data.data.page)
+      setPageCount(res.data.data.pageCount)
+    }
+  }
+
+  useEffect(() => {
+    if (router.isReady) {
+      // 從router.query得到所有查詢字串參數
+      const { page } = router.query
+      // 要送至伺服器的query string參數
+
+      // 設定回所有狀態(注意所有從查詢字串來都是字串類型)，都要給預設值
+      setPage(Number(page) || 1)
+      // setOwner(Number(owner_id) || 1)
+
+      const query = {
+        page: page,
+        owner_id: auther.sid,
+      }
+      // 載入資料
+      getPetListData(query)
+    }
+  }, [router.query, router.isReady])
+
+  // 點按分頁時，要送至伺服器的query string參數
+  const handlePageClick = (event) => {
+    router.push({
+      pathname: router.pathname,
+
+      query: {
+        ...router.query,
+        page: event.selected + 1,
+      },
+    })
+  }
+
   return (
     <>
-    {/* 左邊欄位 */}
-    <div className={styles.leftList}>
-              <div className={styles.memberPicOut}>
-                  <img className={styles.memberPic} src='/images/diary/icon-default.png'></img>
-              </div>
+      <main className={styles.main}>
+        {/* 左邊欄位 */}
+        <VerticalNavBar
+          focused='info'
+        />
+        {/* 左邊欄位 */}
 
-              <div className={styles.memberItems}>
-                <br></br>
-                <div className={styles.name}>會員名稱</div>
-                <br></br>
-                <div className={styles.name}>會員綽號</div>
-                <br></br>
-              </div>
+        {/* 右上標題 */}
+        <div className={styles.myBody}>
+          <div className={styles.mypetList}>
+            <div className="d-flex justify-content-between w-100 align-items-baseline p-2">
+              <h4>我的毛孩</h4>
 
-            <div className={styles.iconsOut}>
-              <div className={styles.icons}>
-                <br></br>
-                <div className={styles.icon}><MdPets className={styles.iconSick}/><a className={styles.iconLink} href='#'> 寵物資訊</a></div>
-                <div className={styles.icon}><FaBookMedical className={styles.iconSick}/><a className={styles.iconLink} href='#'> 寵物日記</a></div>
-                <div className={styles.icon}><ImCalculator className={styles.iconSick}/><a className={styles.iconLink} href='#'> 營養計算機</a></div>
+              <Link href="diary/pet/add" role="button">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-lg"
+                >
+                  新增
+                </button>
+              </Link>
+            </div>
+          </div>
+          {/* 右上標題 */}
+          {/* 中間卡片 */}
+          <div>
+            <div className="container">
+              <div className="row g-2">
+                {items.map((v) => {
+                  return (
+                    <div className="col-4" key={v.pet_id}>
+                      <div className="p-3 border border-primary rounded-5">
+                        <div className="row g-2 flex-nowrap">
+                          <div className="col-4">
+                            <Link className={styles.iconLink} href={`/diary/status?pet_id=${v.pet_id}`}>
+                              <img
+                                className={styles.petCard}
+                                src={`http://localhost:3002/img/avatar/pet/${v.pet_avatar}`}
+                                alt="PetHeadpic"
+                                width={80}
+                                height={100}
+                              />
+                            </Link>
+                          </div>
+                          <div className="col-7">
+                            <p className="card-text note-text">
+                              姓名：{v.pet_name}
+                            </p>
+                            <p className="card-text">
+                              生日/領養日：{v.pet_birthday}
+                            </p>
+                            {/* TODO: 生日換算成年齡 */}
+                            <p className="card-text type-text">
+                              品種：{v.pet_breed}
+                            </p>
+                          </div>
+                          <div className="col-1" >
+                            <Link className={styles.iconLink} href={`/diary/pet/edit?pet_id=${v.pet_id}`}>
+                              <BsPencilSquare className={styles.notify} />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
-{/* 左邊欄位 */}
+          {/* 中間卡片 */}
+          <br></br>
 
-{/* 右上標題 */}
-        <div className={styles.mypetList}>
-          <div className={styles.mypetTitle}>
-          <h4>我的毛孩</h4>
-          </div>
-          <div>
-          <button
-            type="button"
-            className="btn btn-outline-primary btn-lg mb-3 " 
-            style={{ width: 100,
-            position: 'absolute',
-            top: '39%',
-            transform: 'translateY(20%)',
-            right: '500px'
-              }}>新增</button>
-          </div>
-          <div className="row">
-          </div>        
-        </div>        
-{/* 右上標題 */}
-
-{/* 中間卡片 */}
-
-<div class="container">
-  <div class="row g-2">
-    <div class="col-4">
-      <div class="p-3 border bg-light">
-        <div>
-          <img className={styles.petCard} src="/images/diary/dogimage1.jpg"/>
-          <div>
-          <p className="card-text note-text">姓名：</p>
-          <p className="card-text">年齡:</p>
-          <p className="card-text type-text">品種:</p>
+          <div style={{ display: 'flex', 'justify-content': 'center' }}>
+            <BS5Pagination
+              forcePage={page - 1}
+              onPageChange={handlePageClick}
+              pageCount={pageCount}
+            />
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="p-3 border bg-light"><div>
-          <img className={styles.petCard} src="/images/diary/dogimage1.jpg"/>
-          <div>
-          <p className="card-text note-text">姓名：</p>
-          <p className="card-text">年齡:</p>
-          <p className="card-text type-text">品種:</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="p-3 border bg-light"><div>
-          <img className={styles.petCard} src="/images/diary/dogimage1.jpg"/>
-          <div>
-          <p className="card-text note-text">姓名：</p>
-          <p className="card-text">年齡:</p>
-          <p className="card-text type-text">品種:</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="p-3 border bg-light"><div>
-          <img className={styles.petCard} src="/images/diary/dogimage1.jpg"/>
-          <div>
-          <p className="card-text note-text">姓名：</p>
-          <p className="card-text">年齡:</p>
-          <p className="card-text type-text">品種:</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="p-3 border bg-light"><div>
-          <img className={styles.petCard} src="/images/diary/dogimage1.jpg"/>
-          <div>
-          <p className="card-text note-text">姓名：</p>
-          <p className="card-text">年齡:</p>
-          <p className="card-text type-text">品種:</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="p-3 border bg-light"><div>
-          <img className={styles.petCard} src="/images/diary/dogimage1.jpg"/>
-          <div>
-          <p className="card-text note-text">姓名：</p>
-          <p className="card-text">年齡:</p>
-          <p className="card-text type-text">品種:</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{/* 中間卡片 */}
-
-{/* <div className="col">
-    <div>
-    <Pagination>
-    <Pagination.First />
-    <Pagination.Prev />
-    <Pagination.Item>{1}</Pagination.Item>
-    <Pagination.Item>{2}</Pagination.Item>
-    <Pagination.Item active>{3}</Pagination.Item>
-    <Pagination.Item>{4}</Pagination.Item>
-    <Pagination.Item disabled>{5}</Pagination.Item>
-    <Pagination.Ellipsis />
-    <Pagination.Item>{10}</Pagination.Item>
-    <Pagination.Next />
-    <Pagination.Last />
-    </Pagination>
-    </div> 
-</div> */}
-
-  </>
+      </main>
+    </>
   )
 }

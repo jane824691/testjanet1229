@@ -117,6 +117,7 @@ export default function TWZipCode({
             placeholder="郵遞區號"
             aria-label="default input example"
             value={postcode}
+            onChange={(e) => setPostcode(e.target.value)}
           />
         </span>
       </div>

@@ -5,7 +5,7 @@ function PriceRangeRadio(props) {
 
   return (
     <>
-      <div className="form-check">
+      <div className="form-check mx-3">
         <input
           className="form-check-input"
           type="radio"

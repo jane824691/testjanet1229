@@ -14,9 +14,30 @@ import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
 // 範例出處
 // https://swiperjs.com/demos#thumbs-gallery
 // https://codesandbox.io/s/k3cyyc
-export default function Carousel() {
+export default function Carousel({
+  pid,
+  firstImage,
+  mainImage,
+  secondaryImage,
+  additionalImage,
+}) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
+  const imagePath01 = firstImage
+    ? `../image/product/${firstImage}`
+    : '../images/product/638348807730300000 (1).jfif'
+
+  const imagePath02 = mainImage
+    ? `../image/product/${mainImage}`
+    : '../images/product/638348807730300000 (1).jfif'
+
+  const imagePath03 = secondaryImage
+    ? `../image/product/${secondaryImage}`
+    : '../images/product/638348807730300000 (1).jfif'
+
+  const imagePath04 = additionalImage
+    ? `../image/product/${additionalImage}`
+    : '../images/product/638348807730300000 (1).jfif'
   return (
     <>
       <Swiper
@@ -35,34 +56,19 @@ export default function Carousel() {
         className="mySwiper2"
       >
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000 (1).jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath01} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000 (2).jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath02} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000 (3).jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath03} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000.jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath04} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638394484323270000.jpg"
-            className="mx-auto"
-          />
+          <img src={imagePath01} className="mx-auto" />
         </SwiperSlide>
       </Swiper>
       <Swiper
@@ -75,34 +81,19 @@ export default function Carousel() {
         className="mySwiper"
       >
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000 (1).jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath01} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000 (2).jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath02} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000 (3).jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath03} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638348807730300000.jfif"
-            className="mx-auto"
-          />
+          <img src={imagePath04} className="mx-auto" />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            src="/images/product/638394484323270000.jpg"
-            className="mx-auto"
-          />
+          <img src={imagePath01} className="mx-auto" />
         </SwiperSlide>
       </Swiper>
     </>

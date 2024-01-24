@@ -6,11 +6,11 @@ import SortBar from './components/SortBar/'
 import SearchBar from './components/SearchBar/'
 import FilterBar from './components/FilterBar/'
 import ProductList from './components/ProductList'
-
 import { useRouter } from 'next/router'
 import { PRODUCT } from '@/components/my-const'
 import PagesBar from './components/PagesBar'
-import CarouselSwiper from '@/components/product/CarouselSwiper'
+import { CatLoader } from '@/components/hooks/use-loader/components'
+
 //import PagesBar from './components/ProductList/PagesBarTest'
 
 import Link from 'next/link'
@@ -73,9 +73,23 @@ export default function List() {
     '$1000 - $1999',
     '$2000 - $2999',
   ]
+  // 載入指示的spinner動畫用的
+  const [isLoading, setIsLoading] = useState(false)
+
+  //x秒後自動關掉spinner(設定isLoading為false)
+  useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1000)
+    }
+  }, [isLoading])
 
   // 初始化資料-didMount
   useEffect(() => {
+    // 先開起載入指示器
+    setIsLoading(true)
+
     // 模擬和伺服器要資料
     // 最後設定到狀態中
     setProducts(data.rows)
@@ -159,6 +173,7 @@ export default function List() {
         // 原本資料裡的tags字串轉為陣列
         // 将category_id转换为字符串再转为数组
         const productTags = String(product.category_id).split(',')
+        console.log(productTags)
 
         // 将 category_id 转换为对应的标签
         const mappedTags = productTags.map(
@@ -214,7 +229,7 @@ export default function List() {
     if (searchWord.length < 2 && searchWord.length !== 0) return
 
     // 先開起載入指示器
-    //    setIsLoading(true)
+    setIsLoading(true)
 
     let newProducts = []
 
@@ -277,11 +292,17 @@ export default function List() {
                   <div className="row row-cols-1 row-cols-md-3 g-4">
                     {/* 如果想看純前端畫面(X後端)可解開以下帶JSON假資料 */}
                     {/* {data.map((v, i) => { */}
-                    <ProductList products={displayProducts} />
+                    {isLoading ? (
+                      <CatLoader />
+                    ) : (
+                      <>
+                        <ProductList products={displayProducts} />
+                        <PagesBar data={data} />
+                      </>
+                    )}
 
                     {/* 頁碼 */}
                   </div>
-                  <PagesBar data={data} />
                 </div>
               </div>
             </div>

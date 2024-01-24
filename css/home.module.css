@@ -227,3 +227,15 @@
     transform: rotate(0deg);
   }
 }
+
+.diary{
+  display: flex;
+  justify-content: center;
+}
+.diaryLink{
+  width: 1600px;
+}
+.image{
+  width: 100%;
+  height: 100%;
+}

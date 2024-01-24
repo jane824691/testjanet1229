@@ -75,7 +75,7 @@ function ProductList() {
         {' '}
         <button
           type="button"
-          className="btn btn-outline-danger btn-lg rounded-5"
+          className="btn btn-danger btn-lg rounded-5 text-white fs-3"
           style={{ width: 250 }}
           onClick={() => {
             router.push('../product/list')

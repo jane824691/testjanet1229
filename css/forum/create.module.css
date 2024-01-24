@@ -1,0 +1,270 @@
+.main{
+  height: 3500px;
+  display: flex;
+}
+
+
+
+
+/* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 */
+
+
+.leftList{
+  /* border: 5px solid pink; */
+  /* background-color: #f1cdd3; */
+
+  /* border: 2px solid #CA9145 ; */
+  width: 230px;
+  height: 500px;
+  border-radius: 10px;
+  display: inline-block;
+  justify-content: center;
+  margin-left: 250px;
+  margin-top: 30px;
+}
+.leftListTop{
+  display: inline-block;
+  justify-content: center;
+  border: 5px solid rgb(18, 31, 213);
+}
+.memberPicOut{
+  width: 100%;
+  /* border: 5px solid rgb(227, 72, 20); */
+  display: flex;
+  justify-content: center;
+}
+.memberPic{
+  width: 140px;
+  height: 140px;
+  border-radius: 100px;  
+  /*border: 5px solid rgb(237, 10, 48); */
+
+}
+.memberItems{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 5px solid #CA9145;
+  padding-bottom: 8px;
+}
+.name{
+  color: #845F2D;
+  font-weight: 600;
+}
+.nowLocationOut{
+  color: #CA9145;
+  background-color: #F6E7D0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nowLocation{
+  /* display: flex;
+ align-items: center; */
+ width: 200px;
+ height: 50px;
+ line-height: 50px;
+ display: flex;
+ align-content: center;
+ justify-content: center;
+ font-size: 28px;
+}
+.iconsOut{
+  display: flex;
+  justify-content: center;
+}
+.icons{
+  /* width: 150px; */
+  text-decoration: none;
+  padding-right: 20px;
+}
+.icon{
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border: 1px ;
+}
+.icon:hover {
+  background-color: #F8723F;
+  border-radius: 10px;
+}
+.iconSick{
+  width:15px;
+  height: 15px; 
+  /* padding: 20px; */
+  color: #FFB44F;
+  margin-right: 5px;
+}
+.iconSick:hover {
+  color:white
+}
+.iconLink{
+  text-decoration: none;
+  font-size: 20px;
+}
+
+/* 為了那個hover */
+.iconLink:hover {
+  color:white
+}
+
+.iconLink:hover .iconSick{
+  color:white
+}
+.icon:hover .iconSick{
+  color:white
+}
+.icon:hover .iconLink{
+  color: white;
+}
+/* 為了那個hover */
+
+/* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 *//* 左邊側邊欄位 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.writtenOut{
+  width: 940px;
+  height: 750px;
+  border: 2px solid #F8723F;
+  border-radius: 20px;
+  margin-top: 30px;
+
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+ margin-left: 50px;
+}
+
+
+.formTitle{
+  font-size: 26px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.uploadButton{
+  width: 141px;
+  height: 48px;
+  background-color: #F8723F;
+  
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin-left: -660px;
+
+}
+
+.form{
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 400px; */
+  /* border:  2px blue solid; */
+  height: 300px;
+
+}
+
+
+.writtenTitleAndContent{
+  /* border: 2px solid yellow; */
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  margin-left: -10px;
+}
+
+
+
+
+.writtenTitleInput{
+  width: 285px;
+  height: 40px;
+  border-radius: 20px;
+  border: #FFB44F 2px solid;
+  text-indent: 10px;
+  /* text-indent: 10px;
+  text-indent: 10px;
+  text-indent: 10px; */
+
+}
+.boardCategorySelect{
+  width: 183px;
+  height: 40px;
+}
+
+
+
+.writtenContentTitle{
+  margin-left: -10px;
+
+}
+
+
+.writtenContent{
+  border-radius: 20px;
+  border: #FFB44F 2px solid;
+  margin-left: -10px;
+  width: 800px;
+  height: 288px;
+}
+
+
+.buttonGiveAndSend{
+  /* border: #FFB44F 2px solid; */
+  display: flex;
+  justify-content: space-between;
+  margin-left: -10px;
+  margin-top: 30px;
+  /* margin-bottom: 50px; */
+}
+
+
+
+
+
+
+
+.buttonGive{
+  color: #FFB44F;
+  background-color: #fff;
+  border: #FFB44F 1px solid;
+  border-radius: 8px;
+  width: 168px;
+  height: 48px;
+  font-size: 30pz;
+}
+
+.buttonSend{
+  color: #FFfF;
+  background-color: #FFB44F;
+  border: #FFB44F 1px solid;
+  border-radius: 8px;
+  width: 168px;
+  height: 48px;
+  font-size: 30pz;
+
+}
+
+

@@ -1,0 +1,167 @@
+.main{
+  height: 100%;
+  display: flex;
+}
+.leftList{
+  /* border: 5px solid pink; */
+  width: 230px;
+  display: inline-block;
+  justify-content: center;
+  margin-left: 250px;
+  margin-top: 30px;
+}
+.leftListTop{
+  display: inline-block;
+  justify-content: center;
+}
+.memberPicOut{
+  width: 100%;
+  /* border: 5px solid rgb(227, 72, 20); */
+  display: flex;
+  justify-content: center;
+}
+
+.memberPic{
+  width: 140px;
+  height: 140px;
+  border-radius: 100px;  
+}
+
+.memberItems{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 5px solid #CA9145;
+}
+
+.name{
+    color: #845F2D;
+    font-weight: 600;
+}
+
+.nowLocationOut{
+    color: #CA9145;
+    background-color: #F6E7D0;
+    border-radius: 10px;
+}
+
+.iconsOut{
+    display: flex;
+    justify-content: center;
+
+}
+.icons{
+  /* width: 150px; */
+    text-decoration: none;
+  /* padding-right: 10px; */
+}
+.icon{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px ;
+}
+.icon:hover {
+    background-color: #F8723F;
+    border-radius: 10px;
+}
+.iconSick{
+    width:15px;
+    height: 15px; 
+  /* padding: 20px; */
+    color: #FFB44F;
+    margin-right: 5px;
+}
+.iconSick:hover {
+    color:white
+}
+.iconLink{
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.iconLink1{
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+  }
+  
+  .iconSick1{
+    width:15px;
+    height: 15px; 
+    /* padding: 20px; */
+    color: #ffffff;
+    margin-right: 5px;
+  }
+  
+  
+  .icon1{
+    border: 1px ;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    background-color: #F8723F ;
+    color: white;
+  }
+
+
+/* 為了那個hover */
+.iconLink:hover {
+    color:white
+}
+
+.iconLink:hover .iconSick{
+    color:white
+}
+.icon:hover .iconSick{
+    color:white
+}
+.icon:hover .iconLink{
+    color: white;
+}
+/* 為了那個hover */
+
+.petHeadpic{
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;  
+    position:relative;
+    display:inline-block;
+}
+
+.input{
+    color: #401E11;
+    width: 25%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+
+
+}
+.myBody{
+  padding-left: 10%;
+  padding-top: 3%;
+    margin-left: 10%;
+
+    }
+
+.item {
+    width: 100%;
+    position:relative;
+}
+
+.notify{
+    position: absolute;
+    right:0px;
+    bottom:0px;
+    background:#FFB44F;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white; 
+    padding:5px 7px;
+    width: 32px;
+    height: 32px;
+  }

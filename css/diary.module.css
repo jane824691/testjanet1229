@@ -1,5 +1,5 @@
 .main{
-  height: 3500px;
+  height: 1000px;
   display: flex;
 }
 .leftList{
@@ -53,7 +53,8 @@
 .icons{
   /* width: 150px; */
   text-decoration: none;
-  padding-right: 20px;
+  /* padding-right: 10px; */
+  /* padding-right: 10px; */
 }
 .icon{
   padding: 10px;
@@ -80,6 +81,31 @@
   font-size: 20px;
 }
 
+.iconLink1{
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+}
+
+.iconSick1{
+  width:15px;
+  height: 15px; 
+  /* padding: 20px; */
+  color: #ffffff;
+  margin-right: 5px;
+}
+
+
+.icon1{
+  border: 1px ;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 20px;
+  background-color: #F8723F ;
+  color: white;
+}
+
 /* 為了那個hover */
 .iconLink:hover {
   color:white
@@ -97,15 +123,13 @@
 /* 為了那個hover */
 
 .mypetList{
-  width: 900px;
-  margin-top: 30px;
-  margin-left: 50px;
+  width: 100%;
+  width: 100%;
   display: inline-flex;
-  border-bottom: 5px solid #CA9145;  
-}
-
-.mypetTitle{
-  font-size: 28px;
+  border-bottom: 5px solid #CA9145;
+  margin-bottom: 20px;
+  border-bottom: 5px solid #CA9145;
+  margin-bottom: 20px;
 }
 
 .petCard{
@@ -113,4 +137,45 @@
   height: 100px;
   border-radius: 20px;  
 }
+.petList{
+  width:100px;
+  height:50px;
+  line-height:50px;
+  padding:10px;
+  color:#401E11;
+  border-radius: 10px; 
 
+}
+
+.myBody{
+  width: 100%;
+  padding: 30px;
+  margin-left: 50px;
+  margin-top: 30px;
+  
+  }
+
+  .item {
+    width: 30px;
+    height: 20px;
+    position:relative;
+}
+
+.notify{
+    position: absolute;
+    text-align: center;
+    color:rgb(255, 163, 5); 
+    padding:5px 7px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .notify:hover{
+    color:rgb(255, 84, 5); 
+    padding:2px 3px;
+  }
+
+  .col:hover .image{
+    transform: scale(1.5);
+    transition: .5s;
+  }

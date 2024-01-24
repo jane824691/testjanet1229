@@ -105,8 +105,7 @@ function OrderSteps() {
     actual_amount: selectedProducts.actual_amount,
     email: payment.email,
   }
-  console.log(payment)
-  console.log(selectedProducts);
+
   const onSubmit = async () => {
     const r = await fetch(ORDER_LIST_ADD, {
       method: 'POST',
@@ -117,10 +116,10 @@ function OrderSteps() {
     })
     const responseData = await r.json()
     if (responseData.success) {
-      toast.success('恭喜完成訂單!!')
-      // setTimeout(() => {
-      //   router.push('../../product')
-      // }, 3000)
+      toast.success('恭喜完成訂單!! 3秒後跳轉回商城')
+      setTimeout(() => {
+        router.push('../../product')
+      }, 3000)
     } else {
       toast.error('訂單新增失敗, 請聯繫客服')
     }

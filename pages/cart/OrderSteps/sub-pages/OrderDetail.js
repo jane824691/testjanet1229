@@ -21,9 +21,9 @@ export default function OrderDetail({
 
   const [couponOptions, setCouponOptions] = useState(coupons)
   const [selectedCouponId, setSelectedCouponId] = useState(0)
-  // const [netTotal, setNetTotal] = useState(0)
   console.log(items)
 
+    // 確認出正確後端可接收到的格式才考慮怎麼包陣列還物件
   useEffect(() => {
     if (items.length > 0) {
       const selectedProducts = {
@@ -37,69 +37,7 @@ export default function OrderDetail({
     }
   }, [items])
 
-  // 確認出正確後端可接收到的格式如下
-    //{ pid: [ 195, 197 ], sale_price: [ 640, 495 ], actual_amount: [ 1280, 1980 ] }
 
-  //而實際我需要一對多的情況，是先試出後端成功存入的格式如下，才回到前端作調整：
-  // {
-  //     "success": true,
-  //     "postData": {
-  //         "name": "花花&明明",
-  //         "total": "100",
-  //         "pid": [
-  //             "57",
-  //             "58",
-  //         ],
-  //         "sale_price": [
-  //             "123",
-  //             "456",
-  //         ],
-  //         "actual_amount": [
-  //             "333",
-  //             "444",
-  //         ],
-  //         "email": "example@gmail.com"
-  //     },
-  //     "result": {
-  //         "order_list": {
-  //             "fieldCount": 0,
-  //             "affectedRows": 1,
-  //             ....
-  //         },
-  //         "order_child": {
-  //             "fieldCount": 0,
-  //             ↑ 兩張表都有存入這邊提示就會有兩段
-  //         }
-  //     }
-  // }
-
-  // useEffect(() => {
-  //   if (items.length > 0) {
-  //     const selectedProducts = items.map((item) => ({
-  //       pid: item.pid,
-  //       //name: item.name, //
-  //       quantity: item.quantity,
-  //       price: item.price,
-  //     }))
-  //     console.log(selectedProducts)
-
-  //     setSelectedProducts(selectedProducts)
-  //   }
-  // }, [items])
-
-  // ↑這個變成陣列包物件
-  //   "selectedProducts": [
-  //     {
-  //         "pid": 195,
-  //         "quantity": 2,
-  //         "price": 640
-  //     },
-  //     {
-  //         "pid": 197,
-  //         "quantity": 4,
-  //         "price": 495
-  //     }
-  // ]
 
   useEffect(() => {
     // 一開始沒套用折價券，netTotal和cart.totalPrice一樣
@@ -216,7 +154,7 @@ export default function OrderDetail({
                     className="card-header card-big-title border border-0"
                     style={{ backgroundColor: 'transparent ' }}
                   >
-                    訂購人資訊
+                    取貨人資訊
                   </div>
                   <div className="card-body">
                     <label

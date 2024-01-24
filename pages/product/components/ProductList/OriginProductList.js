@@ -34,33 +34,32 @@ function ProductList() {
   
   return (
     <>
-{data.rows &&
-  data.rows.slice(0, 4).map((v, i) => {
-    return (
-      <div className="row" key={v.pid}>
-        {/* <Link href={`/product/${v.pid}`} className="noline"> */}
-          <div className="card border-primary" >
-            <img
-              src="/images/product/638348807730300000 (1).jfif"
-              alt="name of product"
-              className="card-img-top"
-            />
-            <div className="card-body no-space-x">
-              <p className="card-text">{v.product_name}</p>
-              <span className="h-currency bold h-now">
-                <span>NT$ </span>
-                {v.product_price}
-              </span>
+      {data.rows &&
+        data.rows.map((v, i) => {
+          return (
+            <div className="col" key={v.pid}>
+              <Link href={`/product/${v.pid}`} className="noline">
+                <div className="card border-primary">
+                  <img
+                    src="/images/product/638348807730300000 (1).jfif"
+                    alt="name of product"
+                    className="card-img-top"
+                  />
+                  <div className="card-body no-space-x">
+                    <p className="card-text">{v.product_name}</p>
+                    <span className="h-currency bold h-now">
+                      <span>NT$ </span>
+                      {v.product_price}
+                    </span>
+                  </div>
+                </div>
+              </Link>
             </div>
-          </div>
-        {/* </Link> */}
-      </div>
-    )
-  })}
-
+          )
+        })}
 
       {/* 頁碼 */}
-      {/* <div className="pages mx-auto">
+      <div className="pages mx-auto">
         <div className="row">
           <div className="col">
             <nav aria-label="Page navigation example">
@@ -175,7 +174,7 @@ function ProductList() {
             </nav>
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   )
 }

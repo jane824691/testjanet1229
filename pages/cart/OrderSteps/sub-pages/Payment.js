@@ -25,6 +25,7 @@ export default function Payment(props) {
   }
 
   // 更改付款方式的css
+  // 更改付款方式的css
   const [selectedOption, setSelectedOption] = useState(null)
 
   const handleRadioChange = (optionId) => {
@@ -135,8 +136,8 @@ export default function Payment(props) {
                       type="checkbox"
                       onClick={() => {
                         setPaymentData({
-                          name: '王小明',
-                          phone: '0912345678',
+                          name: '陳小豪',
+                          phone: '0988123456',
                           email: 'ispan@ispan.com',
                           address: '復興南路一段390號2樓',
                         })

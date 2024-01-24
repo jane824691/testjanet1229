@@ -47,7 +47,13 @@ export default function Detail() {
       <div className="row mt-5 mx-5 mb-5">
         <div className="col-sm-7">
           <div className="position-sticky" style={{ top: '2rem' }}>
-            <Carousel />
+            <Carousel
+              pid={myProduct.pid}
+              firstImage={myProduct.product_img}
+              mainImage={myProduct.photo_content_main}
+              secondaryImage={myProduct.photo_content_secondary}
+              additionalImage={myProduct.photo_content}
+            />
           </div>
         </div>
 
